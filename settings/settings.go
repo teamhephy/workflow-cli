@@ -7,8 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
-	deis "github.com/deis/controller-sdk-go"
-	"github.com/deis/workflow-cli/version"
+	deis "github.com/teamhephy/controller-sdk-go"
+	"github.com/teamhephy/workflow-cli/version"
 )
 
 // DefaultResponseLimit is the default number of responses to return on requests that can
@@ -40,7 +40,7 @@ func Load(cf string) (*Settings, error) {
 	if _, err := os.Stat(filename); err != nil {
 		if os.IsNotExist(err) {
 			return nil, fmt.Errorf(`Client configuration file not found at: %s
-Are you logged in? Use 'deis login' or 'deis register' to get started.`, filename)
+Are you logged in? Use 'hephy login' or 'hephy register' to get started.`, filename)
 		}
 
 		return nil, err
@@ -90,7 +90,7 @@ func (s *Settings) Save(cf string) (string, error) {
 		return "", err
 	}
 
-	if err = os.MkdirAll(filepath.Join(FindHome(), "/.deis/"), 0700); err != nil {
+	if err = os.MkdirAll(filepath.Join(FindHome(), "/.hephy/"), 0700); err != nil {
 		return "", err
 	}
 

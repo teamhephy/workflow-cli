@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -14,7 +14,7 @@ labels:list   list application's labels
 labels:set    add new application's label
 labels:unset  remove application's label
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -43,7 +43,7 @@ func labelsList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Prints a list of labels of the application.
 
-Usage: deis labels:list [options]
+Usage: hephy labels:list [options]
 
 Options:
   -a --app=<app>
@@ -63,10 +63,10 @@ func labelsSet(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Sets labels for an application.
 
-A label is a key/value pair used to label an application. This label is a general information for deis user.
+A label is a key/value pair used to label an application. This label is a general information for hephy user.
 Mostly used for administration/maintenance information, note for application. This information isn't send to scheduler.
 
-Usage: deis labels:set [options] <key>=<value>...
+Usage: hephy labels:set [options] <key>=<value>...
 
 Arguments:
   <key> the label key, for example: "git_repo" or "team"
@@ -92,7 +92,7 @@ func labelsUnset(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Unsets labels for an application.
 
-Usage: deis labels:unset [options] <key>...
+Usage: hephy labels:unset [options] <key>...
 
 Arguments:
   <key> the label key to unset, for example: "git_repo" or "team"

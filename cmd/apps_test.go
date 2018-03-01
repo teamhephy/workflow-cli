@@ -10,9 +10,9 @@ import (
 
 	"github.com/arschles/assert"
 
-	"github.com/deis/workflow-cli/pkg/git"
-	"github.com/deis/workflow-cli/pkg/testutil"
-	"github.com/deis/workflow-cli/settings"
+	"github.com/teamhephy/workflow-cli/pkg/git"
+	"github.com/teamhephy/workflow-cli/pkg/testutil"
+	"github.com/teamhephy/workflow-cli/settings"
 )
 
 type expandURLCases struct {
@@ -292,7 +292,7 @@ func TestExpandUrl(t *testing.T) {
 	}
 
 	for _, check := range checks {
-		out := expandURL("deis.foo.com", check.Input)
+		out := expandURL("hephy.foo.com", check.Input)
 
 		if out != check.Expected {
 			t.Errorf("Expected %s, Got %s", check.Expected, out)
@@ -327,14 +327,14 @@ func TestRemoteExists(t *testing.T) {
 	assert.NoErr(t, os.Chdir(dir))
 
 	assert.NoErr(t, git.Init(git.DefaultCmd))
-	assert.NoErr(t, git.CreateRemote(git.DefaultCmd, "localhost", "deis", "appname"))
+	assert.NoErr(t, git.CreateRemote(git.DefaultCmd, "localhost", "hephy", "appname"))
 
 	var b bytes.Buffer
 	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
 
-	err = cmdr.AppCreate("foo", "", "deis", false)
+	err = cmdr.AppCreate("foo", "", "hephy", false)
 
-	assert.Equal(t, err.Error(), `A git remote with the name deis already exists. To overwrite this remote run:
-deis git:remote --force --remote deis --app foo`,
+	assert.Equal(t, err.Error(), `A git remote with the name hephy already exists. To overwrite this remote run:
+hephy git:remote --force --remote hephy --app foo`,
 		"output")
 }

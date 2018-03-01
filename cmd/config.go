@@ -10,10 +10,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/deis/pkg/prettyprint"
+	"github.com/teamhephy/pkg/prettyprint"
 
-	"github.com/deis/controller-sdk-go/api"
-	"github.com/deis/controller-sdk-go/config"
+	"github.com/teamhephy/controller-sdk-go/api"
+	"github.com/teamhephy/controller-sdk-go/config"
 )
 
 // ConfigList lists an app's config.
@@ -88,9 +88,9 @@ func (d *DeisCmd) ConfigSet(appID string, configVars []string) error {
 	// send them a deprecation notice.
 	for key := range configMap {
 		if strings.Contains(key, "HEALTHCHECK_") {
-			d.Println(`Hey there! We've noticed that you're using 'deis config:set HEALTHCHECK_URL'
+			d.Println(`Hey there! We've noticed that you're using 'hephy config:set HEALTHCHECK_URL'
 to set up healthchecks. This functionality has been deprecated. In the future, please use
-'deis healthchecks' to set up application health checks. Thanks!`)
+'hephy healthchecks' to set up application health checks. Thanks!`)
 		}
 	}
 
@@ -283,7 +283,7 @@ func parseSSHKey(value string) (string, error) {
 	}
 
 	// NOTE(felixbuenemann): check if the current value is already a base64 encoded key.
-	// This is the case if it was fetched using "deis config:pull".
+	// This is the case if it was fetched using "hephy config:pull".
 	contents, err := base64.StdEncoding.DecodeString(value)
 
 	if err == nil && sshRegex.MatchString(string(contents)) {

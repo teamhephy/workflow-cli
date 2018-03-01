@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -14,7 +14,7 @@ domains:add           bind a domain to an application
 domains:list          list domains bound to an application
 domains:remove        unbind a domain from an application
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -43,7 +43,7 @@ func domainsAdd(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Binds a domain to an application.
 
-Usage: deis domains:add <domain> [options]
+Usage: hephy domains:add <domain> [options]
 
 Arguments:
   <domain>
@@ -70,7 +70,7 @@ func domainsList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Lists domains bound to an application.
 
-Usage: deis domains:list [options]
+Usage: hephy domains:list [options]
 
 Options:
   -a --app=<app>
@@ -99,7 +99,7 @@ func domainsRemove(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Unbinds a domain for an application.
 
-Usage: deis domains:remove <domain> [options]
+Usage: hephy domains:remove <domain> [options]
 
 Arguments:
   <domain>

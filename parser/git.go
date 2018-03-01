@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -15,7 +15,7 @@ Valid commands for git:
 git:remote          Adds git remote of application to repository
 git:remove          Removes git remote of application from repository
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -36,13 +36,13 @@ func gitRemote(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Adds git remote of application to repository
 
-Usage: deis git:remote [options]
+Usage: hephy git:remote [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
   -r --remote=REMOTE
-    name of remote to create. [default: deis]
+    name of remote to create. [default: hephy]
   -f --force
     overwrite remote of the given name if it already exists.
 `
@@ -64,7 +64,7 @@ func gitRemove(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Removes git remotes of application from repository.
 
-Usage: deis git:remove [options]
+Usage: hephy git:remove [options]
 
 Options:
   -a --app=<app>

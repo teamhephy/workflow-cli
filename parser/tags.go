@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -14,7 +14,7 @@ tags:list        list tags for an app
 tags:set         set tags for an app
 tags:unset       unset tags for an app
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -43,7 +43,7 @@ func tagsList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Lists tags for an application.
 
-Usage: deis tags:list [options]
+Usage: hephy tags:list [options]
 
 Options:
   -a --app=<app>
@@ -67,7 +67,7 @@ A tag is a key/value pair used to tag an application's containers and is passed 
 scheduler. This is often used to restrict workloads to specific hosts matching the
 scheduler-configured metadata.
 
-Usage: deis tags:set [options] <key>=<value>...
+Usage: hephy tags:set [options] <key>=<value>...
 
 Arguments:
   <key> the tag key, for example: "environ" or "rack"
@@ -93,7 +93,7 @@ func tagsUnset(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Unsets tags for an application.
 
-Usage: deis tags:unset [options] <key>...
+Usage: hephy tags:unset [options] <key>...
 
 Arguments:
   <key> the tag key to unset, for example: "environ" or "rack"

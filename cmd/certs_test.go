@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/arschles/assert"
-	"github.com/deis/controller-sdk-go/api"
-	"github.com/deis/workflow-cli/pkg/testutil"
+	"github.com/teamhephy/controller-sdk-go/api"
+	"github.com/teamhephy/workflow-cli/pkg/testutil"
 )
 
 func TestCertsList(t *testing.T) {
@@ -71,12 +71,12 @@ func TestCertsList(t *testing.T) {
 	err = cmdr.CertsList(-1, time.Date(2016, time.June, 9, 0, 0, 0, 0, time.UTC))
 	assert.NoErr(t, err)
 
-	assert.Equal(t, b.String(), `        Name       |   Common Name    |    SubjectAltName    |         Expires          |   Fingerprint   |       Domains        |  Updated   |  Created    
+	assert.Equal(t, b.String(), `        Name       |   Common Name    |    SubjectAltName    |         Expires          |   Fingerprint   |       Domains        |  Updated   |  Created
 +------------------+------------------+----------------------+--------------------------+-----------------+----------------------+------------+------------+
-  test-example-com | test.example.com | test.com,example.com | 10 Nov 2014 (expired)    | 12:34[...]78:90 | test.com,example.com | 9 Jun 2016 | 9 Jun 2016  
-  test-deis-com    | test.deis.com    |                      | 1 Aug 2016 (in 2 months) | ab:12[...]12:ab |                      | 9 Jun 2016 | 9 Jun 2016  
-  test1            | 1.test.deis.com  |                      | 11 Jun 2016 (in 2 days)  |                 |                      | unknown    | unknown     
-  test2            | 2.test.deis.com  |                      | 1 Jan 2018 (in 2 years)  |                 |                      | unknown    | unknown     
+  test-example-com | test.example.com | test.com,example.com | 10 Nov 2014 (expired)    | 12:34[...]78:90 | test.com,example.com | 9 Jun 2016 | 9 Jun 2016
+  test-deis-com    | test.deis.com    |                      | 1 Aug 2016 (in 2 months) | ab:12[...]12:ab |                      | 9 Jun 2016 | 9 Jun 2016
+  test1            | 1.test.deis.com  |                      | 11 Jun 2016 (in 2 days)  |                 |                      | unknown    | unknown
+  test2            | 2.test.deis.com  |                      | 1 Jan 2018 (in 2 years)  |                 |                      | unknown    | unknown
 `, "output")
 
 	cf, server, err = testutil.NewTestServerAndClient()
@@ -144,9 +144,9 @@ func TestCertsListLimit(t *testing.T) {
 	err = cmdr.CertsList(1, time.Date(2016, time.June, 9, 0, 0, 0, 0, time.UTC))
 	assert.NoErr(t, err)
 
-	assert.Equal(t, b.String(), `        Name       |   Common Name    |    SubjectAltName    |        Expires        |   Fingerprint   |       Domains        |  Updated   |  Created    
+	assert.Equal(t, b.String(), `        Name       |   Common Name    |    SubjectAltName    |        Expires        |   Fingerprint   |       Domains        |  Updated   |  Created
 +------------------+------------------+----------------------+-----------------------+-----------------+----------------------+------------+------------+
-  test-example-com | test.example.com | test.com,example.com | 10 Nov 2014 (expired) | 12:34[...]78:90 | test.com,example.com | 9 Jun 2016 | 9 Jun 2016  
+  test-example-com | test.example.com | test.com,example.com | 10 Nov 2014 (expired) | 12:34[...]78:90 | test.com,example.com | 9 Jun 2016 | 9 Jun 2016
 `, "output")
 
 }
@@ -213,16 +213,16 @@ Updated:            9 Jun 2016
 	err = cmdr.CertInfo("test-deis-com")
 	assert.NoErr(t, err)
 	assert.Equal(t, b.String(), `=== test-deis-com Certificate
-Common Name(s):     
+Common Name(s):
 Expires At:         unknown
 Starts At:          unknown
-Fingerprint:        
+Fingerprint:
 Subject Alt Name:   N/A
-Issuer:             
-Subject:            
+Issuer:
+Subject:
 
 Connected Domains:  No connected domains
-Owner:              
+Owner:
 Created:            unknown
 Updated:            unknown
 `, "output")

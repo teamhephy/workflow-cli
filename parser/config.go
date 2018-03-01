@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -16,7 +16,7 @@ config:unset       unset environment variables for an app
 config:pull        extract environment variables to .env
 config:push        set environment variables from .env
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -49,7 +49,7 @@ func configList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Lists environment variables for an application.
 
-Usage: deis config:list [options]
+Usage: hephy config:list [options]
 
 Options:
   --oneline
@@ -83,7 +83,7 @@ func configSet(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Sets environment variables for an application.
 
-Usage: deis config:set <var>=<value> [<var>=<value>...] [options]
+Usage: hephy config:set <var>=<value> [<var>=<value>...] [options]
 
 Arguments:
   <var>
@@ -111,7 +111,7 @@ func configUnset(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Unsets an environment variable for an application.
 
-Usage: deis config:unset <key>... [options]
+Usage: hephy config:unset <key>... [options]
 
 Arguments:
   <key>
@@ -136,11 +136,11 @@ func configPull(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Extract all environment variables from an application for local use.
 
-The environmental variables can be piped into a file, 'deis config:pull > file',
+The environmental variables can be piped into a file, 'hephy config:pull > file',
 or stored locally in a file named .env. This file can be
 read by foreman to load the local environment for your app.
 
-Usage: deis config:pull [options]
+Usage: hephy config:pull [options]
 
 Options:
   -a --app=<app>
@@ -170,9 +170,9 @@ Sets environment variables for an application.
 
 This file can be read by foreman
 to load the local environment for your app. The file should be piped via
-stdin, 'deis config:push < .env', or using the --path option.
+stdin, 'hephy config:push < .env', or using the --path option.
 
-Usage: deis config:push [options]
+Usage: hephy config:push [options]
 
 Options:
   -a --app=<app>

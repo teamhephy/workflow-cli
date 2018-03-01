@@ -1,5 +1,5 @@
 # the filepath to this repository, relative to $GOPATH/src
-repo_path = github.com/deis/workflow-cli
+repo_path = github.com/teamhephy/workflow-cli
 
 HOST_OS := $(shell uname)
 ifeq ($(HOST_OS),Darwin)
@@ -13,7 +13,7 @@ GIT_TAG ?= $(shell git describe --abbrev=0 --tags)
 REVISION ?= $(shell git rev-parse --short HEAD)
 
 REGISTRY ?= quay.io/
-IMAGE_PREFIX ?= deisci
+IMAGE_PREFIX ?= kingdonb
 IMAGE := ${REGISTRY}${IMAGE_PREFIX}/workflow-cli-dev:${REVISION}
 
 BUILD_OS ?=linux darwin windows
@@ -32,34 +32,34 @@ endef
 
 build: build-test-image
 	$(eval GO_LDFLAGS= -ldflags '-X ${repo_path}/version.Version=dev-${REVISION}')
-	docker run --rm -e GOOS=${GOOS} -v ${CURDIR}/_dist:/out ${IMAGE} go build -a -installsuffix cgo ${GO_LDFLAGS} -o /out/deis .
-	@$(call check-static-binary,_dist/deis)
-	@echo "${GOOS} binary written to _dist/deis"
+	docker run --rm -e GOOS=${GOOS} -v ${CURDIR}/_dist:/out ${IMAGE} go build -a -installsuffix cgo ${GO_LDFLAGS} -o /out/hephy .
+	@$(call check-static-binary,_dist/hephy)
+	@echo "${GOOS} binary written to _dist/hephy"
 
 # This is supposed to be run within a docker container
 build-latest:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}-${REVISION}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/deis-latest-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/hephy-latest-{{.OS}}-{{.Arch}}" .
 
 # This is supposed to be run within a docker container
 build-revision:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}-${REVISION}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/${REVISION}/deis-${REVISION}-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/${REVISION}/hephy-${REVISION}-{{.OS}}-{{.Arch}}" .
 
 # This is supposed to be run within a docker container
 build-stable:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/deis-stable-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/hephy-stable-{{.OS}}-{{.Arch}}" .
 
 # This is supposed to be run within a docker container
 build-tag:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/${GIT_TAG}/deis-${GIT_TAG}-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/${GIT_TAG}/hephy-${GIT_TAG}-{{.OS}}-{{.Arch}}" .
 
 build-all: build-latest build-revision
 
 install:
-	cp deis $$GOPATH/bin
+	cp hephy $$GOPATH/bin
 
 test-style: build-test-image
 	docker run --rm ${IMAGE} lint

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -22,7 +22,7 @@ apps:run           run a command in an ephemeral app container
 apps:destroy       destroy an application
 apps:transfer      transfer app ownership to another user
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -63,7 +63,7 @@ Creates a new application.
 
 - if no <id> is provided, one will be generated automatically.
 
-Usage: deis apps:create [<id>] [options]
+Usage: hephy apps:create [<id>] [options]
 
 Arguments:
   <id>
@@ -72,11 +72,11 @@ Arguments:
 
 Options:
   --no-remote
-    do not create a 'deis' git remote.
+    do not create a 'hephy' git remote.
   -b --buildpack BUILDPACK
     a buildpack url to use for this app
   -r --remote REMOTE
-    name of remote to create. [default: deis]
+    name of remote to create. [default: hephy]
 `
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
@@ -97,7 +97,7 @@ func appsList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Lists applications visible to the current user.
 
-Usage: deis apps:list [options]
+Usage: hephy apps:list [options]
 
 Options:
   -l --limit=<num>
@@ -123,7 +123,7 @@ func appInfo(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Prints info about the current application.
 
-Usage: deis apps:info [options]
+Usage: hephy apps:info [options]
 
 Options:
   -a --app=<app>
@@ -145,7 +145,7 @@ func appOpen(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Opens a URL to the application in the default browser.
 
-Usage: deis apps:open [options]
+Usage: hephy apps:open [options]
 
 Options:
   -a --app=<app>
@@ -167,7 +167,7 @@ func appLogs(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Retrieves the most recent log events.
 
-Usage: deis apps:logs [options]
+Usage: hephy apps:logs [options]
 
 Options:
   -a --app=<app>
@@ -205,7 +205,7 @@ func appRun(argv []string, cmdr cmd.Commander) error {
 Runs a command inside an ephemeral app container. Default environment is
 /bin/bash.
 
-Usage: deis apps:run [options] [--] <command>...
+Usage: hephy apps:run [options] [--] <command>...
 
 Arguments:
   <command>
@@ -232,7 +232,7 @@ func appDestroy(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Destroys an application.
 
-Usage: deis apps:destroy [options]
+Usage: hephy apps:destroy [options]
 
 Options:
   -a --app=<app>
@@ -258,7 +258,7 @@ func appTransfer(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Transfer app ownership to another user.
 
-Usage: deis apps:transfer <username> [options]
+Usage: hephy apps:transfer <username> [options]
 
 Arguments:
   <username>

@@ -8,13 +8,13 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/deis/workflow-cli/cli"
-	"github.com/deis/workflow-cli/cmd"
-	"github.com/deis/workflow-cli/parser"
+	"github.com/teamhephy/workflow-cli/cli"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/parser"
 	docopt "github.com/docopt/docopt-go"
 )
 
-const extensionPrefix = "deis-"
+const extensionPrefix = "hephy-"
 
 // main exits with the return value of Command(os.Args[1:]), deferring all logic to
 // a func we can test.
@@ -25,9 +25,9 @@ func main() {
 // Command routes deis commands to their proper parser.
 func Command(argv []string, wOut io.Writer, wErr io.Writer, wIn io.Reader) int {
 	usage := `
-The Deis command-line client issues API calls to a Deis controller.
+The Hephy command-line client issues API calls to a Hephy controller.
 
-Usage: deis <command> [<args>...]
+Usage: hephy <command> [<args>...]
 
 Options:
   -h --help
@@ -36,16 +36,16 @@ Options:
     display client version
   -c --config=<config>
     path to configuration file. Equivalent to
-    setting $DEIS_PROFILE. Defaults to ~/.deis/config.json.
-    If value is not a filepath, will assume location ~/.deis/client.json
+    setting $DEIS_PROFILE. Defaults to ~/.hephy/config.json.
+    If value is not a filepath, will assume location ~/.hephy/client.json
 
-Auth commands, use 'deis help auth' to learn more::
+Auth commands, use 'hephy help auth' to learn more::
 
   register      register a new user with a controller
   login         login to a controller
   logout        logout from the current controller
 
-Subcommands, use 'deis help [subcommand]' to learn more::
+Subcommands, use 'hephy help [subcommand]' to learn more::
 
   apps          manage applications used to provide services
   autoscale     manage autoscale for applications
@@ -70,7 +70,7 @@ Subcommands, use 'deis help [subcommand]' to learn more::
   version       display client version
   whitelist     manage whitelisted addresses of an application
 
-Shortcut commands, use 'deis shortcuts' to see all::
+Shortcut commands, use 'hephy shortcuts' to see all::
 
   create        create a new application
   destroy       destroy an application
@@ -81,7 +81,7 @@ Shortcut commands, use 'deis shortcuts' to see all::
   run           run a command in an ephemeral app container
   scale         scale processes by type (web=2, worker=1)
 
-Use 'git push deis master' to deploy to an application.
+Use 'git push hephy master' to deploy to an application.
 `
 	// Reorganize some command line flags and commands.
 	command, argv := parseArgs(argv)
@@ -94,7 +94,7 @@ Use 'git push deis master' to deploy to an application.
 	}
 
 	if len(argv) == 0 {
-		fmt.Fprintln(wErr, "Usage: deis <command> [<args>...]")
+		fmt.Fprintln(wErr, "Usage: hephy <command> [<args>...]")
 		return 1
 	}
 

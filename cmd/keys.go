@@ -10,10 +10,10 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/deis/controller-sdk-go/api"
-	"github.com/deis/controller-sdk-go/keys"
-	"github.com/deis/workflow-cli/pkg/ssh"
-	"github.com/deis/workflow-cli/settings"
+	"github.com/teamhephy/controller-sdk-go/api"
+	"github.com/teamhephy/controller-sdk-go/keys"
+	"github.com/teamhephy/workflow-cli/pkg/ssh"
+	"github.com/teamhephy/workflow-cli/settings"
 )
 
 // KeysList lists a user's keys.
@@ -104,7 +104,7 @@ func (d *DeisCmd) KeyAdd(name string, keyLocation string) error {
 		key.ID = name
 	}
 
-	d.Printf("Uploading %s to deis...", filepath.Base(key.Name))
+	d.Printf("Uploading %s to hephy...", filepath.Base(key.Name))
 
 	if _, err = keys.New(s.Client, key.ID, key.Public); d.checkAPICompatibility(s.Client, err) != nil {
 		d.Println()

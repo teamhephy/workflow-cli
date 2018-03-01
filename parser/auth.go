@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -20,7 +20,7 @@ auth:whoami            display the current user
 auth:cancel            remove the current user account
 auth:regenerate        regenerate user tokens
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -51,7 +51,7 @@ func authRegister(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Registers a new user with a Deis controller.
 
-Usage: deis auth:register <controller> [options]
+Usage: hephy auth:register <controller> [options]
 
 Arguments:
   <controller>
@@ -102,7 +102,7 @@ func authLogin(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Logs in by authenticating against a controller.
 
-Usage: deis auth:login <controller> [options]
+Usage: hephy auth:login <controller> [options]
 
 Arguments:
   <controller>
@@ -139,7 +139,7 @@ func authLogout(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Logs out from a controller and clears the user session.
 
-Usage: deis auth:logout
+Usage: hephy auth:logout
 
 Options:
 `
@@ -155,7 +155,7 @@ func authPasswd(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Changes the password for the current user.
 
-Usage: deis auth:passwd [options]
+Usage: hephy auth:passwd [options]
 
 Options:
   --password=<password>
@@ -183,7 +183,7 @@ func authWhoami(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Displays the currently logged in user.
 
-Usage: deis auth:whoami [options]
+Usage: hephy auth:whoami [options]
 
 Options:
   --all
@@ -203,7 +203,7 @@ func authCancel(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Cancels and removes the current account.
 
-Usage: deis auth:cancel [options]
+Usage: hephy auth:cancel [options]
 
 Options:
   --username=<username>
@@ -231,7 +231,7 @@ func authRegenerate(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Regenerates auth token, defaults to regenerating token for the current user.
 
-Usage: deis auth:regenerate [options]
+Usage: hephy auth:regenerate [options]
 
 Options:
   -u --username=<username>

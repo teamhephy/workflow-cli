@@ -6,14 +6,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/deis/controller-sdk-go/api"
-	"github.com/deis/controller-sdk-go/apps"
-	"github.com/deis/controller-sdk-go/config"
-	"github.com/deis/controller-sdk-go/domains"
-	"github.com/deis/workflow-cli/pkg/git"
-	"github.com/deis/workflow-cli/pkg/logging"
-	"github.com/deis/workflow-cli/pkg/webbrowser"
-	"github.com/deis/workflow-cli/settings"
+	"github.com/teamhephy/controller-sdk-go/api"
+	"github.com/teamhephy/controller-sdk-go/apps"
+	"github.com/teamhephy/controller-sdk-go/config"
+	"github.com/teamhephy/controller-sdk-go/domains"
+	"github.com/teamhephy/workflow-cli/pkg/git"
+	"github.com/teamhephy/workflow-cli/pkg/logging"
+	"github.com/teamhephy/workflow-cli/pkg/webbrowser"
+	"github.com/teamhephy/workflow-cli/settings"
 )
 
 // AppCreate creates an app.
@@ -51,7 +51,7 @@ func (d *DeisCmd) AppCreate(id, buildpack, remote string, noRemote bool) error {
 		if err = git.CreateRemote(git.DefaultCmd, s.Client.ControllerURL.Host, remote, app.ID); err != nil {
 			if strings.Contains(err.Error(), fmt.Sprintf("fatal: remote %s already exists.", remote)) {
 				msg := "A git remote with the name %s already exists. To overwrite this remote run:\n"
-				msg += "deis git:remote --force --remote %s --app %s"
+				msg += "hephy git:remote --force --remote %s --app %s"
 				return fmt.Errorf(msg, remote, remote, app.ID)
 			}
 			return err
@@ -61,7 +61,7 @@ func (d *DeisCmd) AppCreate(id, buildpack, remote string, noRemote bool) error {
 	}
 
 	if noRemote {
-		d.Printf("If you want to add a git remote for this app later, use `deis git:remote -a %s`\n", app.ID)
+		d.Printf("If you want to add a git remote for this app later, use `hephy git:remote -a %s`\n", app.ID)
 	}
 
 	return nil

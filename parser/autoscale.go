@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -14,7 +14,7 @@ autoscale:list   list autoscale options of an application
 autoscale:set    turn on autoscale for an app
 autoscale:unset  turn off autoscale for an app
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -43,7 +43,7 @@ func autoscaleList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Prints a list of autoscale options for the application.
 
-Usage: deis autoscale:list [options]
+Usage: hephy autoscale:list [options]
 
 Options:
   -a --app=<app>
@@ -63,7 +63,7 @@ func autoscaleSet(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Set autoscale option per process type for an app.
 
-Usage: deis autoscale:set <process-type> --min=<min> --max=<max> --cpu-percent=<percent> [options]
+Usage: hephy autoscale:set <process-type> --min=<min> --max=<max> --cpu-percent=<percent> [options]
 
 Arguments:
   <process-type>
@@ -99,7 +99,7 @@ func autoscaleUnset(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Unset autoscale per process type for an app.
 
-Usage: deis autoscale:unset <process-type> [options]
+Usage: hephy autoscale:unset <process-type> [options]
 
 Arguments:
   <process-type>

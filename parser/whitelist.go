@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/deis/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
 )
 
@@ -14,7 +14,7 @@ whitelist:add           adds addresses to the application's whitelist
 whitelist:list          list addresses in the application's whitelist
 whitelist:remove        remove addresses from the application's whitelist
 
-Use 'deis help [command]' to learn more.
+Use 'hephy help [command]' to learn more.
 `
 
 	switch argv[0] {
@@ -43,7 +43,7 @@ func whitelistAdd(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Adds addresses to an application whitelist.
 
-Usage: deis whitelist:add <addresses> [options]
+Usage: hephy whitelist:add <addresses> [options]
 
 Arguments:
   <addresses>
@@ -70,7 +70,7 @@ func whitelistList(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Lists whitelisted addresses for an application.
 
-Usage: deis whitelist:list [options]
+Usage: hephy whitelist:list [options]
 
 Options:
   -a --app=<app>
@@ -92,7 +92,7 @@ func whitelistRemove(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Removes addresses from an application whitelist.
 
-Usage: deis whitelist:remove <addresses> [options]
+Usage: hephy whitelist:remove <addresses> [options]
 
 Arguments:
   <addresses>

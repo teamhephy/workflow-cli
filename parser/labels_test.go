@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/arschles/assert"
-	"github.com/deis/workflow-cli/pkg/testutil"
+	"github.com/teamhephy/workflow-cli/pkg/testutil"
 )
 
 // Create fake implementations of each method that return the argument
@@ -46,7 +46,7 @@ func TestLabels(t *testing.T) {
 			expected: "",
 		},
 		{
-			args:     []string{"labels:set", "git_repo=https://github.com/teamhephy/workflow", "team=deis"},
+			args:     []string{"labels:set", "git_repo=https://github.com/teamhephy/workflow", "team=teamhephy"},
 			expected: "",
 		},
 		{

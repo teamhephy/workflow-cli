@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/deis/workflow-cli/pkg/git"
+	"github.com/teamhephy/workflow-cli/pkg/git"
 )
 
 const remoteCreationMsg = "Git remote %s successfully created for app %s.\n"
@@ -53,7 +53,7 @@ func (d *DeisCmd) GitRemote(appID, remote string, force bool) error {
 		return nil
 	}
 
-	msg := "Remote %s already exists, please run 'deis git:remote -f' to overwrite\n"
+	msg := "Remote %s already exists, please run 'hephy git:remote -f' to overwrite\n"
 	msg += "Existing remote URL: %s\n"
 	msg += "When forced, will overwrite with: %s"
 
