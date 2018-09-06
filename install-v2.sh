@@ -35,7 +35,7 @@ EOF
 PLATFORM="$(uname | tr '[:upper:]' '[:lower:]')"
 ARCH="$(uname -m)"
 # https://storage.googleapis.com/hephy-workflow-cli-release/v2.18.0/deis-v2.18.0-darwin-386
-DEIS_BIN_URL_BASE="https://storage.googleapis.com/hephy-workflow-cli-release""
+DEIS_BIN_URL_BASE="https://storage.googleapis.com/hephy-workflow-cli-release"
 
 if [ "${ARCH}" = "x86_64" ]; then
   ARCH="amd64"
