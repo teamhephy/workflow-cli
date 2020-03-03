@@ -67,8 +67,7 @@ Options:
 func buildsCreate(argv []string, cmdr cmd.Commander) error {
 	usage := `
 Creates a new build of an application. Imports an <image> and deploys it to Deis
-as a new release. If a Procfile is present in the current directory, it will be used
-as the default process types for this application.
+as a new release. 
 
 Usage: deis builds:create <image> [options]
 
