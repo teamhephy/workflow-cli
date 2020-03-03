@@ -48,15 +48,6 @@ func (d *DeisCmd) BuildsCreate(appID, image, procfile string) error {
 		if procfileMap, err = parseProcfile([]byte(procfile)); err != nil {
 			return err
 		}
-	} else if _, err := os.Stat("Procfile"); err == nil {
-		contents, err := ioutil.ReadFile("Procfile")
-		if err != nil {
-			return err
-		}
-
-		if procfileMap, err = parseProcfile(contents); err != nil {
-			return err
-		}
 	}
 
 	d.Print("Creating build... ")
