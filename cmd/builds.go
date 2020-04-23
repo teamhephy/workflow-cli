@@ -1,9 +1,6 @@
 package cmd
 
 import (
-	"io/ioutil"
-	"os"
-
 	yaml "gopkg.in/yaml.v2"
 
 	"github.com/teamhephy/controller-sdk-go/builds"

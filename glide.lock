@@ -1,18 +1,18 @@
 hash: 9644c42725b5eacf54615aeddfdee0cf7fad7398947f7a5088ca58ea7cf73fa1
-updated: 2018-09-27T15:18:20.019279854-07:00
+updated: 2019-03-20T10:59:24.091458096-04:00
 imports:
 - name: github.com/arschles/assert
   version: bb58b908265b5931732079df03f2818bf2167ba0
 - name: github.com/docopt/docopt-go
   version: ee0de3bc6815ee19d4a46c7eb90f829db0e014b1
 - name: github.com/goware/urlx
-  version: 06d8eeb3ce171b5617a3f8ef24451df26ca971ef
+  version: 4fc201f7f862af2abfaca0c2904be15ea0037a34
 - name: github.com/mattn/go-runewidth
-  version: ce7b0b5c7b45a81508558cd1dba6bb1e4ddb51bb
+  version: 703b5e6b11ae25aeb2af9ebb5d5fdf8fa2575211
 - name: github.com/olekukonko/tablewriter
-  version: be2c049b30ccd4d3fd795d6bf7dce74e42eeedaa
+  version: f82d31373321de71ad0289113725564fe180a301
 - name: github.com/PuerkitoBio/purell
-  version: 975f53781597ed779763b7b65566e74c4004d8de
+  version: 44968752391892e1b0d0b821ee79e9a85fa13049
 - name: github.com/PuerkitoBio/urlesc
   version: de5bf2ad457846296e2031421a34e2568e304e35
 - name: github.com/teamhephy/controller-sdk-go
@@ -41,7 +41,7 @@ imports:
   - prettyprint
   - time
 - name: golang.org/x/crypto
-  version: 5295e8364332db77d75fce11f1d19c053919a9c9
+  version: a1f597ede03a7bef967a422b5b3a5bd08805a01e
   subpackages:
   - ssh/terminal
 - name: golang.org/x/net
@@ -50,16 +50,16 @@ imports:
   - context
   - idna
 - name: golang.org/x/sys
-  version: dad3d9fb7b6e83d0f9ac8f54670f6334c3a287b4
+  version: 6c81ef8f67ca3f42fc9cd71dfbd5f35b0c4b5771
   subpackages:
   - unix
   - windows
 - name: golang.org/x/text
-  version: 905a57155faa8230500121607930ebb9dd8e139c
+  version: 5d731a35f4867878fc89f7744f7b6debb3beded6
   subpackages:
   - transform
   - unicode/norm
   - width
 - name: gopkg.in/yaml.v2
-  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
+  version: 51d6538a90f86fe93ac480b35f37b2be17fef232
 testImports: []

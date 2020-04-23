@@ -173,10 +173,6 @@ warp: ./warp 8
 		testutil.SetHeaders(w)
 		testutil.AssertBody(t, api.CreateBuildRequest{
 			Image: "nx/326:latest",
-			Procfile: map[string]string{
-				"web":  "./drive",
-				"warp": "./warp 8",
-			},
 		}, r)
 
 		w.WriteHeader(http.StatusCreated)
