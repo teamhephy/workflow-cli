@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Registry routes registry commands to their specific function
 func Registry(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for registry:
 
 registry:list        list registry info for an app
 registry:set         set registry info for an app
 registry:unset       unset registry info for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "registry:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func registryList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists registry information for an application.
 
-Usage: deis registry:list [options]
+Usage: {{.Name}} registry:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -59,11 +60,11 @@ Options:
 }
 
 func registrySet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets registry information for an application. These credentials are the same as those used for
 'docker login' to the private registry.
 
-Usage: deis registry:set [options] <key>=<value>...
+Usage: {{.Name}} registry:set [options] <key>=<value>...
 
 Arguments:
   <key>
@@ -75,7 +76,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -90,10 +91,10 @@ Options:
 }
 
 func registryUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unsets registry information for an application.
 
-Usage: deis registry:unset [options] <key>...
+Usage: {{.Name}} registry:unset [options] <key>...
 
 Arguments:
   <key> the registry key to unset, for example: "username" or "password"
@@ -101,7 +102,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

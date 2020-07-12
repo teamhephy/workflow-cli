@@ -204,7 +204,7 @@ func TestKeysList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/keys/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -249,7 +249,7 @@ func TestKeysListLimit(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/keys/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -285,7 +285,7 @@ func TestKeyRemove(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/keys/cpike@starfleet.ufp", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -312,7 +312,7 @@ func TestKeyAdd(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	keyFile, err := ioutil.TempFile("", "deis-cli-unit-test-ssh-key")
 	assert.NoErr(t, err)
@@ -358,7 +358,7 @@ func TestKeyAddName(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	keyFile, err := ioutil.TempFile("", "deis-cli-unit-test-ssh-key")
 	assert.NoErr(t, err)

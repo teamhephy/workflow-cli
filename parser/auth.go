@@ -3,13 +3,14 @@ package parser
 import (
 	"fmt"
 
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Auth routes auth commands to the specific function.
 func Auth(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for auth:
 
 auth:register          register a new user
@@ -20,8 +21,8 @@ auth:whoami            display the current user
 auth:cancel            remove the current user account
 auth:regenerate        regenerate user tokens
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "auth:register":
@@ -48,14 +49,14 @@ Use 'deis help [command]' to learn more.
 }
 
 func authRegister(argv []string, cmdr cmd.Commander) error {
-	usage := `
-Registers a new user with a Deis controller.
+	usage := executable.Render(`
+Registers a new user with a cluster.
 
-Usage: deis auth:register <controller> [options]
+Usage: {{.Name}} auth:register <controller> [options]
 
 Arguments:
   <controller>
-    fully-qualified controller URI, e.g. 'http://deis.local3.deisapp.com/'
+    fully-qualified controller URI, e.g. 'http://{{.Remote}}.local3.deisapp.com/'
 
 Options:
   --username=<username>
@@ -68,7 +69,7 @@ Options:
     logs into the new account after registering.
   --ssl-verify=true
     enables/disables SSL certificate verification for API requests
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -89,8 +90,8 @@ Options:
 
 	// NOTE(bacongobbler): two use cases to check here:
 	//
-	// 1) Legacy; calling `deis auth:register` without --login
-	// 2) calling `deis auth:register --login false`
+	// 1) Legacy; calling `hephy auth:register` without --login
+	// 2) calling `hephy auth:register --login false`
 	if args["--login"] != nil && args["--login"].(string) == "false" {
 		login = false
 	}
@@ -99,14 +100,14 @@ Options:
 }
 
 func authLogin(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Logs in by authenticating against a controller.
 
-Usage: deis auth:login <controller> [options]
+Usage: {{.Name}} auth:login <controller> [options]
 
 Arguments:
   <controller>
-    a fully-qualified controller URI, e.g. "http://deis.local3.deisapp.com/".
+    a fully-qualified controller URI, e.g. "http://{{.Remote}}.local3.deisapp.com/".
 
 Options:
   --username=<username>
@@ -115,7 +116,7 @@ Options:
     provide a password for the account.
   --ssl-verify=true
     enables/disables SSL certificate verification for API requests
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -136,13 +137,13 @@ Options:
 }
 
 func authLogout(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Logs out from a controller and clears the user session.
 
-Usage: deis auth:logout
+Usage: {{.Name}} auth:logout
 
 Options:
-`
+`)
 
 	if _, err := docopt.Parse(usage, argv, true, "", false, true); err != nil {
 		return err
@@ -152,10 +153,10 @@ Options:
 }
 
 func authPasswd(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Changes the password for the current user.
 
-Usage: deis auth:passwd [options]
+Usage: {{.Name}} auth:passwd [options]
 
 Options:
   --password=<password>
@@ -164,7 +165,7 @@ Options:
     the new password for the account.
   --username=<username>
     the account's username.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -180,15 +181,15 @@ Options:
 }
 
 func authWhoami(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Displays the currently logged in user.
 
-Usage: deis auth:whoami [options]
+Usage: {{.Name}} auth:whoami [options]
 
 Options:
   --all
     fetch a more detailed description about the user.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -200,10 +201,10 @@ Options:
 }
 
 func authCancel(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Cancels and removes the current account.
 
-Usage: deis auth:cancel [options]
+Usage: {{.Name}} auth:cancel [options]
 
 Options:
   --username=<username>
@@ -212,7 +213,7 @@ Options:
     provide a password for the account.
   --yes
     force "yes" when prompted.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -228,17 +229,17 @@ Options:
 }
 
 func authRegenerate(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Regenerates auth token, defaults to regenerating token for the current user.
 
-Usage: deis auth:regenerate [options]
+Usage: {{.Name}} auth:regenerate [options]
 
 Options:
   -u --username=<username>
     specify user to regenerate. Requires admin privileges.
   --all
     regenerate token for every user. Requires admin privileges.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

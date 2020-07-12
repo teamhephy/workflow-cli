@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
-// Whitelist displays all relevant commands for `deis whitelist`.
+// Whitelist displays all relevant commands for `hephy whitelist`.
 func Whitelist(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for whitelist:
 
 whitelist:add           adds addresses to the application's whitelist
 whitelist:list          list addresses in the application's whitelist
 whitelist:remove        remove addresses from the application's whitelist
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "whitelist:add":
@@ -40,10 +41,10 @@ Use 'deis help [command]' to learn more.
 }
 
 func whitelistAdd(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Adds addresses to an application whitelist.
 
-Usage: deis whitelist:add <addresses> [options]
+Usage: {{.Name}} whitelist:add <addresses> [options]
 
 Arguments:
   <addresses>
@@ -52,7 +53,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -67,15 +68,15 @@ Options:
 }
 
 func whitelistList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists whitelisted addresses for an application.
 
-Usage: deis whitelist:list [options]
+Usage: {{.Name}} whitelist:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -89,10 +90,10 @@ Options:
 }
 
 func whitelistRemove(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Removes addresses from an application whitelist.
 
-Usage: deis whitelist:remove <addresses> [options]
+Usage: {{.Name}} whitelist:remove <addresses> [options]
 
 Arguments:
   <addresses>
@@ -101,7 +102,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

@@ -3,7 +3,7 @@ package cmd
 import "github.com/teamhephy/controller-sdk-go/tls"
 
 // TLSInfo prints info about the TLS settings for the given app.
-func (d *DeisCmd) TLSInfo(appID string) error {
+func (d *HephyCmd) TLSInfo(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -22,7 +22,7 @@ func (d *DeisCmd) TLSInfo(appID string) error {
 }
 
 // TLSEnable enables the router to enforce https-only requests to the application.
-func (d *DeisCmd) TLSEnable(appID string) error {
+func (d *HephyCmd) TLSEnable(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -44,7 +44,7 @@ func (d *DeisCmd) TLSEnable(appID string) error {
 }
 
 // TLSDisable disables the router to enforce https-only requests to the application.
-func (d *DeisCmd) TLSDisable(appID string) error {
+func (d *HephyCmd) TLSDisable(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

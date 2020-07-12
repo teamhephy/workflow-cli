@@ -3,13 +3,14 @@ package parser
 import (
 	"time"
 
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Certs routes certs commands to their specific function.
 func Certs(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for certs:
 
 certs:list            list SSL certificates for an app
@@ -19,8 +20,8 @@ certs:info            get detailed informaton about the certificate
 certs:attach          attach an SSL certificate to a domain
 certs:detach          detach an SSL certificate from a domain
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "certs:list":
@@ -51,15 +52,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func certsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Show certificate information for an SSL application.
 
-Usage: deis certs:list [options]
+Usage: {{.Name}} certs:list [options]
 
 Options:
   -l --limit=<num>
     the maximum number of results to display, defaults to config setting
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -75,10 +76,10 @@ Options:
 }
 
 func certAdd(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Binds a certificate/key pair to an application.
 
-Usage: deis certs:add <name> <cert> <key> [options]
+Usage: {{.Name}} certs:add <name> <cert> <key> [options]
 
 Arguments:
   <name>
@@ -89,7 +90,7 @@ Arguments:
     The private key of the SSL certificate.
 
 Options:
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -104,17 +105,17 @@ Options:
 }
 
 func certRemove(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 removes a certificate/key pair from the application.
 
-Usage: deis certs:remove <name> [options]
+Usage: {{.Name}} certs:remove <name> [options]
 
 Arguments:
   <name>
     the name of the cert to remove from the app.
 
 Options:
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -125,17 +126,17 @@ Options:
 }
 
 func certInfo(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 fetch more detailed information about a certificate
 
-Usage: deis certs:info <name> [options]
+Usage: {{.Name}} certs:info <name> [options]
 
 Arguments:
   <name>
     the name of the cert to get information from
 
 Options:
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -146,10 +147,10 @@ Options:
 }
 
 func certAttach(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 attach a certificate to a domain.
 
-Usage: deis certs:attach <name> <domain> [options]
+Usage: {{.Name}} certs:attach <name> <domain> [options]
 
 Arguments:
   <name>
@@ -158,7 +159,7 @@ Arguments:
     common name of the domain to attach to (needs to already be in the system)
 
 Options:
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -171,10 +172,10 @@ Options:
 }
 
 func certDetach(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 detach a certificate from a domain.
 
-Usage: deis certs:detach <name> <domain> [options]
+Usage: {{.Name}} certs:detach <name> <domain> [options]
 
 Arguments:
   <name>
@@ -183,7 +184,7 @@ Arguments:
     common name of the domain to detach from
 
 Options:
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {

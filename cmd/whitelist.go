@@ -7,7 +7,7 @@ import (
 )
 
 // WhitelistList lists the addresses whitelisted for app
-func (d *DeisCmd) WhitelistList(appID string) error {
+func (d *HephyCmd) WhitelistList(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -28,7 +28,7 @@ func (d *DeisCmd) WhitelistList(appID string) error {
 }
 
 // WhitelistAdd adds the addresses to the app's Whitelist.
-func (d *DeisCmd) WhitelistAdd(appID, IPs string) error {
+func (d *HephyCmd) WhitelistAdd(appID, IPs string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -50,7 +50,7 @@ func (d *DeisCmd) WhitelistAdd(appID, IPs string) error {
 }
 
 // WhitelistRemove deletes the addresses from the app's Whitelist.
-func (d *DeisCmd) WhitelistRemove(appID, IPs string) error {
+func (d *HephyCmd) WhitelistRemove(appID, IPs string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

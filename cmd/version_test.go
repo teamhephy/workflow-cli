@@ -20,7 +20,7 @@ func TestVersion(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("DEIS_API_VERSION", "1234")

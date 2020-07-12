@@ -8,7 +8,7 @@ import (
 )
 
 // ReleasesList lists an app's releases.
-func (d *DeisCmd) ReleasesList(appID string, results int) error {
+func (d *HephyCmd) ReleasesList(appID string, results int) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -37,7 +37,7 @@ func (d *DeisCmd) ReleasesList(appID string, results int) error {
 }
 
 // ReleasesInfo prints info about a specific release.
-func (d *DeisCmd) ReleasesInfo(appID string, version int) error {
+func (d *HephyCmd) ReleasesInfo(appID string, version int) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -64,7 +64,7 @@ func (d *DeisCmd) ReleasesInfo(appID string, version int) error {
 }
 
 // ReleasesRollback rolls an app back to a previous release.
-func (d *DeisCmd) ReleasesRollback(appID string, version int) error {
+func (d *HephyCmd) ReleasesRollback(appID string, version int) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

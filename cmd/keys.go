@@ -17,7 +17,7 @@ import (
 )
 
 // KeysList lists a user's keys.
-func (d *DeisCmd) KeysList(results int) error {
+func (d *HephyCmd) KeysList(results int) error {
 	s, err := settings.Load(d.ConfigFile)
 
 	if err != nil {
@@ -45,7 +45,7 @@ func (d *DeisCmd) KeysList(results int) error {
 }
 
 // KeyRemove removes keys.
-func (d *DeisCmd) KeyRemove(keyID string) error {
+func (d *HephyCmd) KeyRemove(keyID string) error {
 	s, err := settings.Load(d.ConfigFile)
 
 	if err != nil {
@@ -64,7 +64,7 @@ func (d *DeisCmd) KeyRemove(keyID string) error {
 }
 
 // KeyAdd adds keys.
-func (d *DeisCmd) KeyAdd(name string, keyLocation string) error {
+func (d *HephyCmd) KeyAdd(name string, keyLocation string) error {
 	s, err := settings.Load(d.ConfigFile)
 
 	if err != nil {

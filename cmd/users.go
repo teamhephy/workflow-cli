@@ -6,7 +6,7 @@ import (
 )
 
 // UsersList lists users registered with the controller.
-func (d *DeisCmd) UsersList(results int) error {
+func (d *HephyCmd) UsersList(results int) error {
 	s, err := settings.Load(d.ConfigFile)
 
 	if err != nil {

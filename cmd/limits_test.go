@@ -121,7 +121,7 @@ func TestLimitsList(t *testing.T) {
 	})
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	err = cmdr.LimitsList("enterprise")
 	assert.NoErr(t, err)
@@ -201,7 +201,7 @@ func TestLimitsSet(t *testing.T) {
 	})
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	err = cmdr.LimitsSet("foo", []string{"web=100m"}, "cpu")
 	assert.NoErr(t, err)
@@ -390,7 +390,7 @@ func TestLimitsUnset(t *testing.T) {
 	})
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	err = cmdr.LimitsUnset("foo", []string{"web"}, "memory")
 	assert.NoErr(t, err)

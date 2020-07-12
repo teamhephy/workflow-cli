@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	deis "github.com/teamhephy/controller-sdk-go"
+	hephy "github.com/teamhephy/controller-sdk-go"
 	"github.com/teamhephy/workflow-cli/pkg/git"
 	"github.com/teamhephy/workflow-cli/settings"
 )
@@ -76,13 +76,13 @@ func limitCount(objs, total int) string {
 
 // checkAPICompatibility handles specific behavior for certain errors,
 // such as printing an warning for the API mismatch error
-func (d *DeisCmd) checkAPICompatibility(c *deis.Client, err error) error {
-	if err == deis.ErrAPIMismatch {
+func (d *HephyCmd) checkAPICompatibility(c *hephy.Client, err error) error {
+	if err == hephy.ErrAPIMismatch {
 		if !d.Warned {
 			d.PrintErrf(`!    WARNING: Client and server API versions do not match. Please consider upgrading.
 !    Client version: %s
 !    Server version: %s
-`, deis.APIVersion, c.ControllerAPIVersion)
+`, hephy.APIVersion, c.ControllerAPIVersion)
 			d.Warned = true
 		}
 

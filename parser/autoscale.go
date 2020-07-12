@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
-// Autoscale displays all relevant commands for `deis autoscale`.
+// Autoscale displays all relevant commands for `hephy autoscale`.
 func Autoscale(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for autoscale:
 
 autoscale:list   list autoscale options of an application
 autoscale:set    turn on autoscale for an app
 autoscale:unset  turn off autoscale for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "autoscale:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func autoscaleList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints a list of autoscale options for the application.
 
-Usage: deis autoscale:list [options]
+Usage: {{.Name}} autoscale:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -60,10 +61,10 @@ Options:
 }
 
 func autoscaleSet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Set autoscale option per process type for an app.
 
-Usage: deis autoscale:set <process-type> --min=<min> --max=<max> --cpu-percent=<percent> [options]
+Usage: {{.Name}} autoscale:set <process-type> --min=<min> --max=<max> --cpu-percent=<percent> [options]
 
 Arguments:
   <process-type>
@@ -78,7 +79,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -96,10 +97,10 @@ Options:
 }
 
 func autoscaleUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unset autoscale per process type for an app.
 
-Usage: deis autoscale:unset <process-type> [options]
+Usage: {{.Name}} autoscale:unset <process-type> [options]
 
 Arguments:
   <process-type>
@@ -108,7 +109,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

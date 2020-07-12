@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // TLS routes tls commands to their specific function.
 func TLS(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for tls:
 
 tls:info              view info about an application's TLS settings
 tls:enable            enables the router to enforce https-only requests to an application
 tls:disable           disables the router to enforce https-only requests to an application
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "tls:info":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func tlsInfo(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints info about the current application's TLS settings.
 
-Usage: deis tls:info [options]
+Usage: {{.Name}} tls:info [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -60,15 +61,15 @@ Options:
 }
 
 func tlsEnable(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Enable the router to enforce https-only requests to the current application.
 
-Usage: deis tls:enable [options]
+Usage: {{.Name}} tls:enable [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -80,15 +81,15 @@ Options:
 }
 
 func tlsDisable(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Disable the router from enforcing https-only requests to the current application.
 
-Usage: deis tls:disable [options]
+Usage: {{.Name}} tls:disable [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

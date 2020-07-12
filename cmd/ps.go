@@ -14,7 +14,7 @@ import (
 )
 
 // PsList lists an app's processes.
-func (d *DeisCmd) PsList(appID string, results int) error {
+func (d *HephyCmd) PsList(appID string, results int) error {
 	s, appID, err := load(d.ConfigFile, appID)
 	if err != nil {
 		return err
@@ -35,7 +35,7 @@ func (d *DeisCmd) PsList(appID string, results int) error {
 }
 
 // PsScale scales an app's processes.
-func (d *DeisCmd) PsScale(appID string, targets []string) error {
+func (d *HephyCmd) PsScale(appID string, targets []string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 	if err != nil {
 		return err
@@ -69,7 +69,7 @@ func (d *DeisCmd) PsScale(appID string, targets []string) error {
 }
 
 // PsRestart restarts an app's processes.
-func (d *DeisCmd) PsRestart(appID, target string) error {
+func (d *HephyCmd) PsRestart(appID, target string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 	if err != nil {
 		return err

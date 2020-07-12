@@ -1,19 +1,20 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Users routes user commands to the specific function.
 func Users(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for users:
 
 users:list        list all registered users
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "users:list":
@@ -34,16 +35,16 @@ Use 'deis help [command]' to learn more.
 }
 
 func usersList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists all registered users. Workflow administrators will be marked with a *.
 Requires admin privileges.
 
-Usage: deis users:list [options]
+Usage: {{.Name}} users:list [options]
 
 Options:
   -l --limit=<num>
     the maximum number of results to display, defaults to config setting
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {

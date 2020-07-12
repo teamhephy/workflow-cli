@@ -65,7 +65,7 @@ func TestLimitsCount(t *testing.T) {
 func TestAPICompatibility(t *testing.T) {
 	t.Parallel()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WErr: &b, ConfigFile: ""}
+	cmdr := HephyCmd{WErr: &b, ConfigFile: ""}
 	client := deis.Client{ControllerAPIVersion: "v1.0"}
 
 	err := cmdr.checkAPICompatibility(&client, deis.ErrAPIMismatch)

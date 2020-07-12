@@ -1,19 +1,20 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Shortcuts displays all relevant shortcuts for the CLI.
 func Shortcuts(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for shortcuts:
 
 shortcuts:list       list all relevant shortcuts for the CLI
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "shortcuts:list":
@@ -34,11 +35,11 @@ Use 'deis help [command]' to learn more.
 }
 
 func shortcutsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists all relevant shortcuts for the CLI
 
-Usage: deis shortcuts:list
-`
+Usage: {{.Name}} shortcuts:list
+`)
 
 	_, err := docopt.Parse(usage, argv, true, "", false, true)
 

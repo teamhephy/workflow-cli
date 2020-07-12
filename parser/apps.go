@@ -4,13 +4,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Apps routes app commands to their specific function.
 func Apps(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for apps:
 
 apps:create        create a new application
@@ -22,8 +23,8 @@ apps:run           run a command in an ephemeral app container
 apps:destroy       destroy an application
 apps:transfer      transfer app ownership to another user
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "apps:create":
@@ -58,12 +59,12 @@ Use 'deis help [command]' to learn more.
 }
 
 func appCreate(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Creates a new application.
 
 - if no <id> is provided, one will be generated automatically.
 
-Usage: deis apps:create [<id>] [options]
+Usage: {{.Name}} apps:create [<id>] [options]
 
 Arguments:
   <id>
@@ -72,12 +73,12 @@ Arguments:
 
 Options:
   --no-remote
-    do not create a 'deis' git remote.
+    do not create a '{{.Remote}}' git remote.
   -b --buildpack BUILDPACK
     a buildpack url to use for this app
   -r --remote REMOTE
-    name of remote to create. [default: deis]
-`
+    name of remote to create. [default: {{.Remote}}]
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -94,15 +95,15 @@ Options:
 }
 
 func appsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists applications visible to the current user.
 
-Usage: deis apps:list [options]
+Usage: {{.Name}} apps:list [options]
 
 Options:
   -l --limit=<num>
     the maximum number of results to display, defaults to config setting
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -120,15 +121,15 @@ Options:
 }
 
 func appInfo(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints info about the current application.
 
-Usage: deis apps:info [options]
+Usage: {{.Name}} apps:info [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -142,15 +143,15 @@ Options:
 }
 
 func appOpen(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Opens a URL to the application in the default browser.
 
-Usage: deis apps:open [options]
+Usage: {{.Name}} apps:open [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -164,17 +165,17 @@ Options:
 }
 
 func appLogs(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Retrieves the most recent log events.
 
-Usage: deis apps:logs [options]
+Usage: {{.Name}} apps:logs [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
   -n --lines=<lines>
     the number of lines to display
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -201,11 +202,11 @@ Options:
 }
 
 func appRun(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Runs a command inside an ephemeral app container. Default environment is
 /bin/bash.
 
-Usage: deis apps:run [options] [--] <command>...
+Usage: {{.Name}} apps:run [options] [--] <command>...
 
 Arguments:
   <command>
@@ -214,7 +215,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -229,10 +230,10 @@ Options:
 }
 
 func appDestroy(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Destroys an application.
 
-Usage: deis apps:destroy [options]
+Usage: {{.Name}} apps:destroy [options]
 
 Options:
   -a --app=<app>
@@ -240,7 +241,7 @@ Options:
   --confirm=<app>
     skips the prompt for the application name. <app> is the uniquely identifiable
     name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -255,10 +256,10 @@ Options:
 }
 
 func appTransfer(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Transfer app ownership to another user.
 
-Usage: deis apps:transfer <username> [options]
+Usage: {{.Name}} apps:transfer <username> [options]
 
 Arguments:
   <username>
@@ -267,7 +268,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

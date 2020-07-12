@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Perms routes perms commands to their specific function.
 func Perms(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for perms:
 
 perms:list            list permissions granted on an app
 perms:create          create a new permission for a user
 perms:delete          delete a permission for a user
 
-Use 'deis help perms:[command]' to learn more.
-`
+Use '{{.Name}} help perms:[command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "perms:list":
@@ -40,11 +41,11 @@ Use 'deis help perms:[command]' to learn more.
 }
 
 func permsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists all users with permission to use an app, or lists all users with system
 administrator privileges.
 
-Usage: deis perms:list [-a --app=<app>|--admin|--admin --limit=<num>]
+Usage: {{.Name}} perms:list [-a --app=<app>|--admin|--admin --limit=<num>]
 
 Options:
   -a --app=<app>
@@ -53,7 +54,7 @@ Options:
   --admin
     lists all users with system administrator privileges.
   -l --limit=<num>
-    the maximum number of results to display, defaults to config setting`
+    the maximum number of results to display, defaults to config setting`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -74,11 +75,11 @@ Options:
 }
 
 func permCreate(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Gives another user permission to use an app, or gives another user
 system administrator privileges.
 
-Usage: deis perms:create <username> [-a --app=<app>|--admin]
+Usage: {{.Name}} perms:create <username> [-a --app=<app>|--admin]
 
 Arguments:
   <username>
@@ -90,7 +91,7 @@ Options:
     for the application.
   --admin
     grants <username> system administrator privileges.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -106,11 +107,11 @@ Options:
 }
 
 func permDelete(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Revokes another user's permission to use an app, or revokes another user's system
 administrator privileges.
 
-Usage: deis perms:delete <username> [-a --app=<app>|--admin]
+Usage: {{.Name}} perms:delete <username> [-a --app=<app>|--admin]
 
 Arguments:
   <username>
@@ -121,7 +122,7 @@ Options:
     revokes <username> permission to use <app>. <app> is the uniquely identifiable name
     for the application.
   --admin
-    revokes <username> system administrator privileges.`
+    revokes <username> system administrator privileges.`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

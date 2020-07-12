@@ -68,7 +68,7 @@ func TestLoadSave(t *testing.T) {
 			expected: s.Limit,
 		},
 		{
-			key:      "Deis Client " + version.Version,
+			key:      "Hephy Client " + version.Version,
 			expected: s.Client.UserAgent,
 		},
 	}
@@ -131,7 +131,7 @@ func TestLoadSave(t *testing.T) {
 			expected: s.Limit,
 		},
 		{
-			key:      "Deis Client " + version.Version,
+			key:      "Hephy Client " + version.Version,
 			expected: s.Client.UserAgent,
 		},
 	}

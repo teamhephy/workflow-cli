@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Keys routes key commands to the specific function.
 func Keys(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for SSH keys:
 
 keys:list        list SSH keys for the logged in user
 keys:add         add an SSH key
 keys:remove      remove an SSH key
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "keys:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func keysList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists SSH keys for the logged in user.
 
-Usage: deis keys:list [options]
+Usage: {{.Name}} keys:list [options]
 
 Options:
   -l --limit=<num>
     the maximum number of results to display, defaults to config setting
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -66,10 +67,10 @@ Options:
 }
 
 func keyAdd(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Adds SSH keys for the logged in user.
 
-Usage: deis keys:add [<name>] [<key>]
+Usage: {{.Name}} keys:add [<name>] [<key>]
 
 <name> and <key> can be used in either order and are both optional
 
@@ -78,7 +79,7 @@ Arguments:
     name of the SSH key
   <key>
     a local file path to an SSH public key used to push application code.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -89,15 +90,15 @@ Arguments:
 }
 
 func keyRemove(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Removes an SSH key for the logged in user.
 
-Usage: deis keys:remove <key>
+Usage: {{.Name}} keys:remove <key>
 
 Arguments:
   <key>
     the SSH public key to revoke source code push access.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {

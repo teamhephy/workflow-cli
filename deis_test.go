@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/arschles/assert"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 func TestHelpReformatting(t *testing.T) {
@@ -68,7 +69,7 @@ func TestTopLevelCommandArgsPreparing(t *testing.T) {
 
 	command := "ssh"
 	argv := []string{"ssh"}
-	expected := []string{"deis-ssh"}
+	expected := []string{executable.Name() + "-ssh"}
 	actual := prepareCmdArgs(command, argv)
 
 	if !reflect.DeepEqual(expected, actual) {
@@ -81,7 +82,7 @@ func TestCommandWithParameterArgsPreparing(t *testing.T) {
 
 	command := "ssh --help"
 	argv := []string{"ssh --help"}
-	expected := []string{"deis-ssh --help"}
+	expected := []string{executable.Name() + "-ssh --help"}
 	actual := prepareCmdArgs(command, argv)
 
 	if !reflect.DeepEqual(expected, actual) {

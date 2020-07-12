@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
-// Labels displays all relevant commands for `deis label`.
+// Labels displays all relevant commands for `hephy label`.
 func Labels(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for labels:
 
 labels:list   list application's labels
 labels:set    add new application's label
 labels:unset  remove application's label
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "labels:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func labelsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints a list of labels of the application.
 
-Usage: deis labels:list [options]
+Usage: {{.Name}} labels:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -60,13 +61,13 @@ Options:
 }
 
 func labelsSet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets labels for an application.
 
-A label is a key/value pair used to label an application. This label is a general information for deis user.
+A label is a key/value pair used to label an application. This label is a general information for {{.Name}} user.
 Mostly used for administration/maintenance information, note for application. This information isn't send to scheduler.
 
-Usage: deis labels:set [options] <key>=<value>...
+Usage: {{.Name}} labels:set [options] <key>=<value>...
 
 Arguments:
   <key> the label key, for example: "git_repo" or "team"
@@ -75,7 +76,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -89,10 +90,10 @@ Options:
 }
 
 func labelsUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unsets labels for an application.
 
-Usage: deis labels:unset [options] <key>...
+Usage: {{.Name}} labels:unset [options] <key>...
 
 Arguments:
   <key> the label key to unset, for example: "git_repo" or "team"
@@ -100,7 +101,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {

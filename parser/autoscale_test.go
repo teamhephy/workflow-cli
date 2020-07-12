@@ -12,15 +12,15 @@ import (
 // Create fake implementations of each method that return the argument
 // we expect to have called the function (as an error to satisfy the interface).
 
-func (d FakeDeisCmd) AutoscaleList(string) error {
+func (d FakeHephyCmd) AutoscaleList(string) error {
 	return errors.New("autoscale:list")
 }
 
-func (d FakeDeisCmd) AutoscaleSet(string, string, int, int, int) error {
+func (d FakeHephyCmd) AutoscaleSet(string, string, int, int, int) error {
 	return errors.New("autoscale:set")
 }
 
-func (d FakeDeisCmd) AutoscaleUnset(string, string) error {
+func (d FakeHephyCmd) AutoscaleUnset(string, string) error {
 	return errors.New("autoscale:unset")
 }
 
@@ -33,7 +33,7 @@ func TestAutoscale(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := FakeDeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := FakeHephyCmd{WOut: &b, ConfigFile: cf}
 
 	// cases defines the arguments and expected return of the call.
 	// if expected is "", it defaults to args[0].

@@ -1,20 +1,21 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Builds routes build commands to their specific function.
 func Builds(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for builds:
 
 builds:list        list build history for an application
 builds:create      imports an image and deploys as a new release
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "builds:list":
@@ -37,17 +38,17 @@ Use 'deis help [command]' to learn more.
 }
 
 func buildsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists build history for an application.
 
-Usage: deis builds:list [options]
+Usage: {{.Name}} builds:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
   -l --limit=<num>
     the maximum number of results to display, defaults to config setting
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -65,15 +66,15 @@ Options:
 }
 
 func buildsCreate(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Creates a new build of an application. Imports an <image> and deploys it to Deis
 as a new release. 
 
-Usage: deis builds:create <image> [options]
+Usage: {{.Name}} builds:create <image> [options]
 
 Arguments:
   <image>
-    A fully-qualified docker image, either from Docker Hub (e.g. deis/example-go:latest)
+    A fully-qualified docker image, either from Docker Hub (e.g. {{.Name}}/example-go:latest)
     or from an in-house registry (e.g. myregistry.example.com:5000/example-go:latest).
     This image must include the tag.
 
@@ -82,7 +83,7 @@ Options:
     The uniquely identifiable name for the application.
   -p --procfile=<procfile>
     A YAML string used to supply a Procfile to the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

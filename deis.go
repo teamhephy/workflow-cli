@@ -8,13 +8,14 @@ import (
 	"strings"
 	"syscall"
 
+	docopt "github.com/docopt/docopt-go"
 	"github.com/teamhephy/workflow-cli/cli"
 	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 	"github.com/teamhephy/workflow-cli/parser"
-	docopt "github.com/docopt/docopt-go"
 )
 
-const extensionPrefix = "deis-"
+var extensionPrefix = executable.Name() + "-"
 
 // main exits with the return value of Command(os.Args[1:]), deferring all logic to
 // a func we can test.
@@ -22,12 +23,12 @@ func main() {
 	os.Exit(Command(os.Args[1:], os.Stdout, os.Stderr, os.Stdin))
 }
 
-// Command routes deis commands to their proper parser.
+// Command routes hephy commands to their proper parser.
 func Command(argv []string, wOut io.Writer, wErr io.Writer, wIn io.Reader) int {
-	usage := `
-The Deis command-line client issues API calls to a Deis controller.
+	usage := executable.Render(`
+{{.Name}} helps you interact with clusters.
 
-Usage: deis <command> [<args>...]
+Usage: {{.Name}} <command> [<args>...]
 
 Options:
   -h --help
@@ -36,16 +37,16 @@ Options:
     display client version
   -c --config=<config>
     path to configuration file. Equivalent to
-    setting $DEIS_PROFILE. Defaults to ~/.deis/config.json.
-    If value is not a filepath, will assume location ~/.deis/client.json
+    setting ${{.Env}}. Defaults to ~/{{.Config}}/config.json.
+    If value is not a filepath, will assume location ~/{{.Config}}/client.json
 
-Auth commands, use 'deis help auth' to learn more::
+Auth commands, use '{{.Name}} help auth' to learn more::
 
-  register      register a new user with a controller
-  login         login to a controller
-  logout        logout from the current controller
+  register      register a new user with a cluster
+  login         login to a cluster
+  logout        logout from the current cluster
 
-Subcommands, use 'deis help [subcommand]' to learn more::
+Subcommands, use '{{.Name}} help [subcommand]' to learn more::
 
   apps          manage applications used to provide services
   autoscale     manage autoscale for applications
@@ -72,7 +73,7 @@ Subcommands, use 'deis help [subcommand]' to learn more::
   services      manage services for your applications
   timeouts      manage pods termination grace period
 
-Shortcut commands, use 'deis shortcuts' to see all::
+Shortcut commands, use '{{.Name}} shortcuts' to see all::
 
   create        create a new application
   destroy       destroy an application
@@ -83,8 +84,8 @@ Shortcut commands, use 'deis shortcuts' to see all::
   run           run a command in an ephemeral app container
   scale         scale processes by type (web=2, worker=1)
 
-Use 'git push deis master' to deploy to an application.
-`
+Use 'git push {{.Remote}} master' to deploy to an application.
+`)
 	// Reorganize some command line flags and commands.
 	command, argv := parseArgs(argv)
 	// Give docopt an optional final false arg so it doesn't call os.Exit().
@@ -96,14 +97,14 @@ Use 'git push deis master' to deploy to an application.
 	}
 
 	if len(argv) == 0 {
-		fmt.Fprintln(wErr, "Usage: deis <command> [<args>...]")
+		fmt.Fprintln(wErr, "Usage:", executable.Name(), "<command> [<args>...]")
 		return 1
 	}
 
 	configFlag := getConfigFlag(argv)
 	// Don't pass down config flag to parser because it isn't defined there.
 	argv = removeConfigFlag(argv)
-	cmdr := cmd.DeisCmd{ConfigFile: configFlag, WOut: wOut, WErr: wErr, WIn: wIn}
+	cmdr := cmd.HephyCmd{ConfigFile: configFlag, WOut: wOut, WErr: wErr, WIn: wIn}
 
 	// Dispatch the command, passing the argv through so subcommands can
 	// re-parse it according to their usage strings.
@@ -122,8 +123,8 @@ Use 'git push deis master' to deploy to an application.
 		err = parser.Config(argv, &cmdr)
 	case "domains":
 		err = parser.Domains(argv, &cmdr)
-  case "services":
-    err = parser.Services(argv, &cmdr)
+	case "services":
+		err = parser.Services(argv, &cmdr)
 	case "git":
 		err = parser.Git(argv, &cmdr)
 	case "healthchecks":
@@ -137,8 +138,8 @@ Use 'git push deis master' to deploy to an application.
 		err = parser.Labels(argv, &cmdr)
 	case "limits":
 		err = parser.Limits(argv, &cmdr)
-  case "timeouts":
-    err = parser.Timeouts(argv, &cmdr)
+	case "timeouts":
+		err = parser.Timeouts(argv, &cmdr)
 	case "perms":
 		err = parser.Perms(argv, &cmdr)
 	case "ps":
@@ -220,16 +221,16 @@ func getConfigFlag(argv []string) string {
 func parseArgs(argv []string) (string, []string) {
 	if len(argv) == 1 {
 		if argv[0] == "--help" || argv[0] == "-h" {
-			// rearrange "deis --help" as "deis help"
+			// rearrange "hephy --help" as "hephy help"
 			argv[0] = "help"
 		} else if argv[0] == "--version" || argv[0] == "-v" {
-			// rearrange "deis --version" as "deis version"
+			// rearrange "hephy --version" as "hephy version"
 			argv[0] = "version"
 		}
 	}
 
 	if len(argv) > 1 {
-		// Rearrange "deis help <command>" to "deis <command> --help".
+		// Rearrange "hephy help <command>" to "hephy <command> --help".
 		if argv[0] == "help" || argv[0] == "--help" || argv[0] == "-h" {
 			argv = append(argv[1:], "--help")
 		}

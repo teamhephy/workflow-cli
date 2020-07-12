@@ -6,9 +6,10 @@ import (
 	"strings"
 
 	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 
-	"github.com/teamhephy/controller-sdk-go/api"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/controller-sdk-go/api"
 )
 
 // TODO: This is for supporting backward compatibility and should be removed
@@ -19,15 +20,15 @@ const (
 
 // Healthchecks routes ealthcheck commands to their specific function
 func Healthchecks(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for healthchecks:
 
 healthchecks:list        list healthchecks for an app
 healthchecks:set         set healthchecks for an app
 healthchecks:unset       unset healthchecks for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "healthchecks:list":
@@ -52,17 +53,17 @@ Use 'deis help [command]' to learn more.
 }
 
 func healthchecksList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists healthchecks for an application.
 
-Usage: deis healthchecks:list [options]
+Usage: {{.Name}} healthchecks:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
   --type=<type>
     the procType for which the health check needs to be listed.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -77,7 +78,7 @@ Options:
 }
 
 func healthchecksSet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets healthchecks for an application.
 
 By default, Workflow only checks that the application starts in their Container. A health
@@ -106,7 +107,7 @@ probes accept a string of arguments to be run inside the Container.
 considered healthy if the check can establish a connection. 'tcpSocket' probes accept a
 port number to perform the socket connection on the Container.
 
-Usage: deis healthchecks:set <health-type> <probe-type> [options] [--] <args>...
+Usage: {{.Name}} healthchecks:set <health-type> <probe-type> [options] [--] <args>...
 
 Arguments:
   <health-type>
@@ -136,7 +137,7 @@ Options:
     minimum consecutive successes for the probe to be considered successful after having failed [default: 1]
   --failure-threshold=<failure-threshold>
     minimum consecutive successes for the probe to be considered failed after having succeeded [default: 3]
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -215,10 +216,10 @@ Options:
 }
 
 func healthchecksUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unsets healthchecks for an application.
 
-Usage: deis healthchecks:unset [options] <health-type>...
+Usage: {{.Name}} healthchecks:unset [options] <health-type>...
 
 Arguments:
   <health-type>
@@ -229,7 +230,7 @@ Options:
     the uniquely identifiable name for the application.
   --type=<type>
     the procType for which the health check needs to be removed.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
