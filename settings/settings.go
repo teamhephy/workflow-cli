@@ -91,7 +91,7 @@ func (s *Settings) Save(cf string) (string, error) {
 		return "", err
 	}
 
-	if err = os.MkdirAll(filepath.Join(FindHome(), executable.Name()), 0700); err != nil {
+	if err = os.MkdirAll(filepath.Join(FindHome(), executable.Config()), 0700); err != nil {
 		return "", err
 	}
 
