@@ -12,8 +12,8 @@ endif
 GIT_TAG ?= $(shell git describe --abbrev=0 --tags)
 REVISION ?= $(shell git rev-parse --short HEAD)
 
-REGISTRY ?= quay.io/
-IMAGE_PREFIX ?= deisci
+REGISTRY ?= 
+IMAGE_PREFIX ?= hephy
 IMAGE := ${REGISTRY}${IMAGE_PREFIX}/workflow-cli-dev:${REVISION}
 
 BUILD_OS ?=linux darwin windows
