@@ -4,13 +4,17 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 var filepathRegex = regexp.MustCompile(`^.*[/\\].+\.json$`)
 
+var EnvName = executable.Env()
+
 func locateSettingsFile(cf string) string {
 	if cf == "" {
-		if v, ok := os.LookupEnv("DEIS_PROFILE"); ok {
+		if v, ok := os.LookupEnv(EnvName); ok {
 			cf = v
 		} else {
 			cf = "client"
@@ -22,5 +26,5 @@ func locateSettingsFile(cf string) string {
 		return cf
 	}
 
-	return filepath.Join(FindHome(), ".deis", cf+".json")
+	return filepath.Join(FindHome(), executable.Config(), cf+".json")
 }

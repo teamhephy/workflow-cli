@@ -3,14 +3,15 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/teamhephy/workflow-cli/executable"
 	"github.com/teamhephy/workflow-cli/pkg/git"
 )
 
 const remoteCreationMsg = "Git remote %s successfully created for app %s.\n"
 const remoteDeletionMsg = "Git remotes for app %s removed.\n"
 
-// GitRemote creates a git remote for a deis app.
-func (d *DeisCmd) GitRemote(appID, remote string, force bool) error {
+// GitRemote creates a git remote for a hephy app.
+func (d *HephyCmd) GitRemote(appID, remote string, force bool) error {
 	s, appID, err := load(d.ConfigFile, appID)
 	if err != nil {
 		return err
@@ -53,15 +54,15 @@ func (d *DeisCmd) GitRemote(appID, remote string, force bool) error {
 		return nil
 	}
 
-	msg := "Remote %s already exists, please run 'deis git:remote -f' to overwrite\n"
+	msg := "Remote %s already exists, please run '%s git:remote -f' to overwrite\n"
 	msg += "Existing remote URL: %s\n"
 	msg += "When forced, will overwrite with: %s"
 
-	return fmt.Errorf(msg, remote, remoteURL, expectedURL)
+	return fmt.Errorf(msg, remote, executable.Name(), remoteURL, expectedURL)
 }
 
 // GitRemove removes a application git remote from a repository
-func (d *DeisCmd) GitRemove(appID string) error {
+func (d *HephyCmd) GitRemove(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

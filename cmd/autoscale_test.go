@@ -19,7 +19,7 @@ func TestAutoscaleList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/rivendell/settings/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -62,7 +62,7 @@ func TestAutoscaleSet(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/lothlorien/settings/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -90,7 +90,7 @@ func TestAutoscaleUnset(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/bree/settings/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)

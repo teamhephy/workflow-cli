@@ -11,7 +11,7 @@ import (
 )
 
 // RegistryList lists an app's registry information.
-func (d *DeisCmd) RegistryList(appID string) error {
+func (d *HephyCmd) RegistryList(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -37,7 +37,7 @@ func (d *DeisCmd) RegistryList(appID string) error {
 }
 
 // RegistrySet sets an app's registry information.
-func (d *DeisCmd) RegistrySet(appID string, item []string) error {
+func (d *HephyCmd) RegistrySet(appID string, item []string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -68,7 +68,7 @@ func (d *DeisCmd) RegistrySet(appID string, item []string) error {
 }
 
 // RegistryUnset removes an app's registry information.
-func (d *DeisCmd) RegistryUnset(appID string, items []string) error {
+func (d *HephyCmd) RegistryUnset(appID string, items []string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

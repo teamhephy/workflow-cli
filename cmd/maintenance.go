@@ -6,7 +6,7 @@ import (
 )
 
 // MaintenanceInfo tells the informations about app's maintenance status
-func (d *DeisCmd) MaintenanceInfo(appID string) error {
+func (d *HephyCmd) MaintenanceInfo(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -27,7 +27,7 @@ func (d *DeisCmd) MaintenanceInfo(appID string) error {
 }
 
 // MaintenanceEnable turns on the maintenance for the app.
-func (d *DeisCmd) MaintenanceEnable(appID string) error {
+func (d *HephyCmd) MaintenanceEnable(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -52,7 +52,7 @@ func (d *DeisCmd) MaintenanceEnable(appID string) error {
 }
 
 // MaintenanceDisable turns off the maintenance for the app.
-func (d *DeisCmd) MaintenanceDisable(appID string) error {
+func (d *HephyCmd) MaintenanceDisable(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

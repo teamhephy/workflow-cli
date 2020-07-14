@@ -12,15 +12,15 @@ import (
 // Create fake implementations of each method that return the argument
 // we expect to have called the function (as an error to satisfy the interface).
 
-func (d FakeDeisCmd) DomainsList(string, int) error {
+func (d FakeHephyCmd) DomainsList(string, int) error {
 	return errors.New("domains:list")
 }
 
-func (d FakeDeisCmd) DomainsAdd(string, string) error {
+func (d FakeHephyCmd) DomainsAdd(string, string) error {
 	return errors.New("domains:add")
 }
 
-func (d FakeDeisCmd) DomainsRemove(string, string) error {
+func (d FakeHephyCmd) DomainsRemove(string, string) error {
 	return errors.New("domains:remove")
 }
 
@@ -33,7 +33,7 @@ func TestDomains(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := FakeDeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := FakeHephyCmd{WOut: &b, ConfigFile: cf}
 
 	// cases defines the arguments and expected return of the call.
 	// if expected is "", it defaults to args[0].

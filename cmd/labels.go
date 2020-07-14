@@ -11,7 +11,7 @@ import (
 )
 
 // LabelsList list app's labels
-func (d *DeisCmd) LabelsList(appID string) error {
+func (d *HephyCmd) LabelsList(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -44,7 +44,7 @@ func (d *DeisCmd) LabelsList(appID string) error {
 }
 
 // LabelsSet sets labels for app
-func (d *DeisCmd) LabelsSet(appID string, labels []string) error {
+func (d *HephyCmd) LabelsSet(appID string, labels []string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -74,7 +74,7 @@ func (d *DeisCmd) LabelsSet(appID string, labels []string) error {
 }
 
 // LabelsUnset removes labels for the app.
-func (d *DeisCmd) LabelsUnset(appID string, labels []string) error {
+func (d *HephyCmd) LabelsUnset(appID string, labels []string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

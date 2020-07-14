@@ -4,21 +4,22 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Releases routes releases commands to their specific function.
 func Releases(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for releases:
 
 releases:list        list an application's release history
 releases:info        print information about a specific release
 releases:rollback    return to a previous release
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "releases:list":
@@ -43,17 +44,17 @@ Use 'deis help [command]' to learn more.
 }
 
 func releasesList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists release history for an application.
 
-Usage: deis releases:list [options]
+Usage: {{.Name}} releases:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
   -l --limit=<num>
     the maximum number of results to display, defaults to config setting
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -71,10 +72,10 @@ Options:
 }
 
 func releasesInfo(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints info about a particular release.
 
-Usage: deis releases:info <version> [options]
+Usage: {{.Name}} releases:info <version> [options]
 
 Arguments:
   <version>
@@ -83,7 +84,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -102,10 +103,10 @@ Options:
 }
 
 func releasesRollback(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Rolls back to a previous application release.
 
-Usage: deis releases:rollback [<version>] [options]
+Usage: {{.Name}} releases:rollback [<version>] [options]
 
 Arguments:
   <version>
@@ -114,7 +115,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {

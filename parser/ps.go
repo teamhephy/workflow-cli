@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Ps routes ps commands to their specific function.
 func Ps(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for processes:
 
 ps:list        list application processes
 ps:restart     restart an application or its process types
 ps:scale       scale processes (e.g. web=4 worker=2)
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "ps:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func psList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists processes servicing an application.
 
-Usage: deis ps:list [options]
+Usage: {{.Name}} ps:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -60,10 +61,10 @@ Options:
 }
 
 func psRestart(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Restart an application, a process type or a specific process.
 
-Usage: deis ps:restart [<type>] [options]
+Usage: {{.Name}} ps:restart [<type>] [options]
 
 Arguments:
   <type>
@@ -73,7 +74,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -87,10 +88,10 @@ Options:
 }
 
 func psScale(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Scales an application's processes by type.
 
-Usage: deis ps:scale <type>=<num>... [options]
+Usage: {{.Name}} ps:scale <type>=<num>... [options]
 
 Arguments:
   <type>
@@ -102,7 +103,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

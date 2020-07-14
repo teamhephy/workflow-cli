@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/arschles/assert"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 type confgCases struct {
@@ -16,8 +17,8 @@ type confgCases struct {
 func TestSelectSettings(t *testing.T) {
 	t.Parallel()
 	cases := []confgCases{
-		{"test", filepath.Join(FindHome(), ".deis", "test.json")},
-		{"", filepath.Join(FindHome(), ".deis", "client.json")},
+		{"test", filepath.Join(FindHome(), executable.Config(), "test.json")},
+		{"", filepath.Join(FindHome(), executable.Config(), "client.json")},
 		{"~/test.json", "~/test.json"},
 		{"/opt/test.json", "/opt/test.json"},
 	}
@@ -28,6 +29,6 @@ func TestSelectSettings(t *testing.T) {
 
 	// Check that env variable is used.
 	location := "/test/test.json"
-	os.Setenv("DEIS_PROFILE", location)
+	os.Setenv(executable.Env(), location)
 	assert.Equal(t, locateSettingsFile(""), location, "case")
 }

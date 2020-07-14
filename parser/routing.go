@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
-// Routing displays all relevant commands for `deis routing`.
+// Routing displays all relevant commands for `hephy routing`.
 func Routing(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for routing:
 
 routing:info       view routability of an application
 routing:enable     enable routing for an app
 routing:disable    disable routing for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "routing:info":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func routingInfo(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints info about the current application's routability.
 
-Usage: deis routing:info [options]
+Usage: {{.Name}} routing:info [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -59,15 +60,15 @@ Options:
 }
 
 func routingEnable(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Enables routability for an app.
 
-Usage: deis routing:enable [options]
+Usage: {{.Name}} routing:enable [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -78,15 +79,15 @@ Options:
 }
 
 func routingDisable(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Disables routability for an app.
 
-Usage: deis routing:disable [options]
+Usage: {{.Name}} routing:disable [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

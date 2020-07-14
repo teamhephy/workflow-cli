@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Tags routes tags commands to their specific function
 func Tags(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for tags:
 
 tags:list        list tags for an app
 tags:set         set tags for an app
 tags:unset       unset tags for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "tags:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func tagsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists tags for an application.
 
-Usage: deis tags:list [options]
+Usage: {{.Name}} tags:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -60,14 +61,14 @@ Options:
 }
 
 func tagsSet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets tags for an application.
 
 A tag is a key/value pair used to tag an application's containers and is passed to the
 scheduler. This is often used to restrict workloads to specific hosts matching the
 scheduler-configured metadata.
 
-Usage: deis tags:set [options] <key>=<value>...
+Usage: {{.Name}} tags:set [options] <key>=<value>...
 
 Arguments:
   <key> the tag key, for example: "environ" or "rack"
@@ -76,7 +77,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {
@@ -90,10 +91,10 @@ Options:
 }
 
 func tagsUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unsets tags for an application.
 
-Usage: deis tags:unset [options] <key>...
+Usage: {{.Name}} tags:unset [options] <key>...
 
 Arguments:
   <key> the tag key to unset, for example: "environ" or "rack"
@@ -101,7 +102,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 	if err != nil {

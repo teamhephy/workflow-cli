@@ -20,7 +20,7 @@ func TestReleasesList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/numenor/releases/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -71,7 +71,7 @@ func TestReleasesListLimit(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/numenor/releases/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -110,7 +110,7 @@ func TestReleasesInfo(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/numenor/releases/v2/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -147,7 +147,7 @@ func TestReleasesRollback(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/numenor/releases/rollback/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)

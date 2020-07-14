@@ -12,15 +12,15 @@ import (
 // Create fake implementations of each method that return the argument
 // we expect to have called the function (as an error to satisfy the interface).
 
-func (d FakeDeisCmd) TagsList(string) error {
+func (d FakeHephyCmd) TagsList(string) error {
 	return errors.New("tags:list")
 }
 
-func (d FakeDeisCmd) TagsSet(string, []string) error {
+func (d FakeHephyCmd) TagsSet(string, []string) error {
 	return errors.New("tags:set")
 }
 
-func (d FakeDeisCmd) TagsUnset(string, []string) error {
+func (d FakeHephyCmd) TagsUnset(string, []string) error {
 	return errors.New("tags:unset")
 }
 
@@ -33,7 +33,7 @@ func TestTags(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := FakeDeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := FakeHephyCmd{WOut: &b, ConfigFile: cf}
 
 	// cases defines the arguments and expected return of the call.
 	// if expected is "", it defaults to args[0].

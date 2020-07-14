@@ -1,13 +1,14 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Config routes config commands to their specific function.
 func Config(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for config:
 
 config:list        list environment variables for an app
@@ -16,8 +17,8 @@ config:unset       unset environment variables for an app
 config:pull        extract environment variables to .env
 config:push        set environment variables from .env
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "config:list":
@@ -46,10 +47,10 @@ Use 'deis help [command]' to learn more.
 }
 
 func configList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists environment variables for an application.
 
-Usage: deis config:list [options]
+Usage: {{.Name}} config:list [options]
 
 Options:
   --oneline
@@ -58,7 +59,7 @@ Options:
     print output on multiple lines for comparison against .env files.
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -80,10 +81,10 @@ Options:
 }
 
 func configSet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets environment variables for an application.
 
-Usage: deis config:set <var>=<value> [<var>=<value>...] [options]
+Usage: {{.Name}} config:set <var>=<value> [<var>=<value>...] [options]
 
 Arguments:
   <var>
@@ -94,7 +95,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -108,10 +109,10 @@ Options:
 }
 
 func configUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unsets an environment variable for an application.
 
-Usage: deis config:unset <key>... [options]
+Usage: {{.Name}} config:unset <key>... [options]
 
 Arguments:
   <key>
@@ -120,7 +121,7 @@ Arguments:
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -133,14 +134,14 @@ Options:
 }
 
 func configPull(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Extract all environment variables from an application for local use.
 
-The environmental variables can be piped into a file, 'deis config:pull > file',
+The environmental variables can be piped into a file, '{{.Name}} config:pull > file',
 or stored locally in a file named .env. This file can be
 read by foreman to load the local environment for your app.
 
-Usage: deis config:pull [options]
+Usage: {{.Name}} config:pull [options]
 
 Options:
   -a --app=<app>
@@ -149,7 +150,7 @@ Options:
     Prompts for each value to be overwritten
   -o --overwrite
     Allows you to have the pull overwrite keys in .env
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -165,21 +166,21 @@ Options:
 }
 
 func configPush(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets environment variables for an application.
 
 This file can be read by foreman
 to load the local environment for your app. The file should be piped via
-stdin, 'deis config:push < .env', or using the --path option.
+stdin, '{{.Name}} config:push < .env', or using the --path option.
 
-Usage: deis config:push [options]
+Usage: {{.Name}} config:push [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
   -p <path>, --path=<path>
     a path leading to an environment file [default: .env]
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

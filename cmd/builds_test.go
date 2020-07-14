@@ -37,7 +37,7 @@ func TestBuildsList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/foo/builds/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -88,7 +88,7 @@ func TestBuildsListLimit(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/foo/builds/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -127,7 +127,7 @@ func TestBuildsCreate(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	// Create a new temporary directory and change to it.
 	name, err := ioutil.TempDir("", "client")

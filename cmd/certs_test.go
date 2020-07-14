@@ -21,7 +21,7 @@ func TestCertsList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -112,7 +112,7 @@ func TestCertsListLimit(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -159,7 +159,7 @@ func TestCertsInfo(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/test-example-com", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -236,7 +236,7 @@ func TestCertsRemove(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/test-example-com", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -257,7 +257,7 @@ func TestCertsAttach(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/test-example-com/domain/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -279,7 +279,7 @@ func TestCertsDetach(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/test-example-com/domain/deis.com", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -300,7 +300,7 @@ func TestCertsAdd(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/certs/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)

@@ -87,7 +87,7 @@ func TestPsList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/foo/pods/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -155,7 +155,7 @@ func TestPsScale(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 	err = cmdr.PsScale("foo", []string{"test"})
 	assert.Equal(t, err.Error(), "'test' does not match the pattern 'type=num', ex: web=2\n", "error")
 
@@ -202,7 +202,7 @@ func TestPsRestart(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/foo/pods/restart/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)

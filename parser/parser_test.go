@@ -2,8 +2,8 @@ package parser
 
 import "io"
 
-// DeisCmd is an implementation of Commander.
-type FakeDeisCmd struct {
+// HephyCmd is an implementation of Commander.
+type FakeHephyCmd struct {
 	ConfigFile string
 	Warned     bool
 	WOut       io.Writer
@@ -11,38 +11,38 @@ type FakeDeisCmd struct {
 	WIn        io.Reader
 }
 
-func (d FakeDeisCmd) Println(...interface{}) (int, error) {
+func (d FakeHephyCmd) Println(...interface{}) (int, error) {
 	return 1, nil
 }
 
-func (d FakeDeisCmd) Print(...interface{}) (int, error) {
+func (d FakeHephyCmd) Print(...interface{}) (int, error) {
 	return 1, nil
 }
 
-func (d FakeDeisCmd) Printf(string, ...interface{}) (int, error) {
+func (d FakeHephyCmd) Printf(string, ...interface{}) (int, error) {
 	return 1, nil
 }
 
-func (d FakeDeisCmd) PrintErrln(...interface{}) (int, error) {
+func (d FakeHephyCmd) PrintErrln(...interface{}) (int, error) {
 	return 1, nil
 }
 
-func (d FakeDeisCmd) PrintErr(...interface{}) (int, error) {
+func (d FakeHephyCmd) PrintErr(...interface{}) (int, error) {
 	return 1, nil
 }
 
-func (d FakeDeisCmd) PrintErrf(string, ...interface{}) (int, error) {
+func (d FakeHephyCmd) PrintErrf(string, ...interface{}) (int, error) {
 	return 1, nil
 }
 
-func (d FakeDeisCmd) ServicesAdd(string, string, string) (error) {
+func (d FakeHephyCmd) ServicesAdd(string, string, string) (error) {
 	return nil
 }
 
-func (d FakeDeisCmd) ServicesList(string) (error) {
+func (d FakeHephyCmd) ServicesList(string) (error) {
 	return nil
 }
 
-func (d FakeDeisCmd) ServicesRemove(string, string) (error) {
+func (d FakeHephyCmd) ServicesRemove(string, string) (error) {
 	return nil
 }

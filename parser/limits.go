@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Limits routes limits commands to their specific function
 func Limits(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for limits:
 
 limits:list        list resource limits for an app
 limits:set         set resource limits for an app
 limits:unset       unset resource limits for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "limits:list":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func limitsList(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Lists resource limits for an application.
 
-Usage: deis limits:list [options]
+Usage: {{.Name}} limits:list [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -60,7 +61,7 @@ Options:
 }
 
 func limitSet(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Sets resource requests and limits for an application.
 
 A resource limit is a finite resource within a pod which we can apply
@@ -70,7 +71,7 @@ it'll be default by Kubernetes as both request and limit. These request and limi
 are applied to each individual pod, so setting a memory limit of 1G for an application
 means that each pod gets 1G of memory. Value needs to be within 0 <= request <= limit
 
-Usage: deis limits:set [options] <type>=<value>...
+Usage: {{.Name}} limits:set [options] <type>=<value>...
 
 Arguments:
   <type>
@@ -82,13 +83,13 @@ Arguments:
     You can only set one type of limit per call.
 
     With --memory, units are represented in Bytes (B), Kilobytes (K), Megabytes
-    (M), or Gigabytes (G). For example, 'deis limit:set cmd=1G' will restrict all
+    (M), or Gigabytes (G). For example, '{{.Name}} limit:set cmd=1G' will restrict all
     "cmd" processes to a maximum of 1 Gigabyte of memory each.
 
     With --cpu, units are represented in the number of CPUs. For example,
-    'deis limit:set --cpu cmd=1' will restrict all "cmd" processes to a
+    '{{.Name}} limit:set --cpu cmd=1' will restrict all "cmd" processes to a
     maximum of 1 CPU. Alternatively, you can also use milli units to specify the
-    number of CPU shares the pod can use. For example, 'deis limits:set --cpu cmd=500m'
+    number of CPU shares the pod can use. For example, '{{.Name}} limits:set --cpu cmd=500m'
     will restrict all "cmd" processes to half of a CPU.
 
 Options:
@@ -98,7 +99,7 @@ Options:
     value apply to CPU.
   -m --memory
     value apply to memory. [default: true]
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -118,10 +119,10 @@ Options:
 }
 
 func limitUnset(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Unsets resource limits for an application.
 
-Usage: deis limits:unset [options] [--memory | --cpu] <type>...
+Usage: {{.Name}} limits:unset [options] [--memory | --cpu] <type>...
 
 Arguments:
   <type>
@@ -135,7 +136,7 @@ Options:
     limits cpu shares.
   -m --memory
     limits memory. [default: true]
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

@@ -3,20 +3,21 @@ package parser
 import (
 	"fmt"
 
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
 // Git routes git commands to their specific function.
 func Git(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for git:
 
 git:remote          Adds git remote of application to repository
 git:remove          Removes git remote of application from repository
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "git:remote":
@@ -33,19 +34,19 @@ Use 'deis help [command]' to learn more.
 }
 
 func gitRemote(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Adds git remote of application to repository
 
-Usage: deis git:remote [options]
+Usage: {{.Name}} git:remote [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
   -r --remote=REMOTE
-    name of remote to create. [default: deis]
+    name of remote to create. [default: {{.Remote}}]
   -f --force
     overwrite remote of the given name if it already exists.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -61,15 +62,15 @@ Options:
 }
 
 func gitRemove(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Removes git remotes of application from repository.
 
-Usage: deis git:remove [options]
+Usage: {{.Name}} git:remove [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 

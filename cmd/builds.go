@@ -7,7 +7,7 @@ import (
 )
 
 // BuildsList lists an app's builds.
-func (d *DeisCmd) BuildsList(appID string, results int) error {
+func (d *HephyCmd) BuildsList(appID string, results int) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -32,7 +32,7 @@ func (d *DeisCmd) BuildsList(appID string, results int) error {
 }
 
 // BuildsCreate creates a build for an app.
-func (d *DeisCmd) BuildsCreate(appID, image, procfile string) error {
+func (d *HephyCmd) BuildsCreate(appID, image, procfile string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

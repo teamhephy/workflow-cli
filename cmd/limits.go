@@ -11,7 +11,7 @@ import (
 )
 
 // LimitsList lists an app's limits.
-func (d *DeisCmd) LimitsList(appID string) error {
+func (d *HephyCmd) LimitsList(appID string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -55,7 +55,7 @@ func (d *DeisCmd) LimitsList(appID string) error {
 }
 
 // LimitsSet sets an app's limits.
-func (d *DeisCmd) LimitsSet(appID string, limits []string, limitType string) error {
+func (d *HephyCmd) LimitsSet(appID string, limits []string, limitType string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {
@@ -91,7 +91,7 @@ func (d *DeisCmd) LimitsSet(appID string, limits []string, limitType string) err
 }
 
 // LimitsUnset removes an app's limits.
-func (d *DeisCmd) LimitsUnset(appID string, limits []string, limitType string) error {
+func (d *HephyCmd) LimitsUnset(appID string, limits []string, limitType string) error {
 	s, appID, err := load(d.ConfigFile, appID)
 
 	if err != nil {

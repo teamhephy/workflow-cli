@@ -9,11 +9,11 @@ import (
 	"github.com/teamhephy/workflow-cli/pkg/testutil"
 )
 
-func (d FakeDeisCmd) BuildsList(string, int) error {
+func (d FakeHephyCmd) BuildsList(string, int) error {
 	return errors.New("builds:list")
 }
 
-func (d FakeDeisCmd) BuildsCreate(string, string, string) error {
+func (d FakeHephyCmd) BuildsCreate(string, string, string) error {
 	return errors.New("builds:create")
 }
 
@@ -26,7 +26,7 @@ func TestBuilds(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := FakeDeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := FakeHephyCmd{WOut: &b, ConfigFile: cf}
 
 	// cases defines the arguments and expected return of the call.
 	// if expected is "", it defaults to args[0].

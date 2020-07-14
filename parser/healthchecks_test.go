@@ -13,15 +13,15 @@ import (
 // Create fake implementations of each method that return the argument
 // we expect to have called the function (as an error to satisfy the interface).
 
-func (d FakeDeisCmd) HealthchecksList(string, string) error {
+func (d FakeHephyCmd) HealthchecksList(string, string) error {
 	return errors.New("healthchecks:list")
 }
 
-func (d FakeDeisCmd) HealthchecksSet(string, string, string, *api.Healthcheck) error {
+func (d FakeHephyCmd) HealthchecksSet(string, string, string, *api.Healthcheck) error {
 	return errors.New("healthchecks:set")
 }
 
-func (d FakeDeisCmd) HealthchecksUnset(string, string, []string) error {
+func (d FakeHephyCmd) HealthchecksUnset(string, string, []string) error {
 	return errors.New("healthchecks:unset")
 }
 
@@ -34,7 +34,7 @@ func TestHealthchecks(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := FakeDeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := FakeHephyCmd{WOut: &b, ConfigFile: cf}
 
 	// cases defines the arguments and expected return of the call.
 	// if expected is "", it defaults to args[0].

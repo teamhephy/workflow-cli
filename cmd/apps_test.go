@@ -10,6 +10,7 @@ import (
 
 	"github.com/arschles/assert"
 
+	"github.com/teamhephy/workflow-cli/executable"
 	"github.com/teamhephy/workflow-cli/pkg/git"
 	"github.com/teamhephy/workflow-cli/pkg/testutil"
 	"github.com/teamhephy/workflow-cli/settings"
@@ -28,7 +29,7 @@ func TestAppsList(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -77,7 +78,7 @@ func TestAppsListLimit(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -115,7 +116,7 @@ func TestAppsInfo(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/lorem-ipsum/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -224,7 +225,7 @@ func TestAppDestroy(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/lorem-ipsum/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -257,7 +258,7 @@ func TestAppTransfer(t *testing.T) {
 	}
 	defer server.Close()
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	server.Mux.HandleFunc("/v2/apps/lorem-ipsum/", func(w http.ResponseWriter, r *http.Request) {
 		testutil.SetHeaders(w)
@@ -327,14 +328,15 @@ func TestRemoteExists(t *testing.T) {
 	assert.NoErr(t, os.Chdir(dir))
 
 	assert.NoErr(t, git.Init(git.DefaultCmd))
-	assert.NoErr(t, git.CreateRemote(git.DefaultCmd, "localhost", "deis", "appname"))
+	assert.NoErr(t, git.CreateRemote(git.DefaultCmd, "localhost", "hephy", "appname"))
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
-	err = cmdr.AppCreate("foo", "", "deis", false)
+	err = cmdr.AppCreate("foo", "", "hephy", false)
 
-	assert.Equal(t, err.Error(), `A git remote with the name deis already exists. To overwrite this remote run:
-deis git:remote --force --remote deis --app foo`,
-		"output")
+	expected := executable.Render(`A git remote with the name hephy already exists. To overwrite this remote run:
+{{.Name}} git:remote --force --remote hephy --app foo`)
+
+	assert.Equal(t, err.Error(), expected, "output")
 }

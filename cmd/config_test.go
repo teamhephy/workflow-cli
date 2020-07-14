@@ -117,7 +117,7 @@ func TestConfigList(t *testing.T) {
 	})
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	err = cmdr.ConfigList("foo", "")
 	assert.NoErr(t, err)
@@ -181,7 +181,7 @@ func TestConfigSet(t *testing.T) {
 	})
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	err = cmdr.ConfigSet("foo", []string{"TRUE=false", "SSH_KEY=-----BEGIN OPENSSH PRIVATE KEY-----"})
 	assert.NoErr(t, err)
@@ -235,7 +235,7 @@ func TestConfigUnset(t *testing.T) {
 	})
 
 	var b bytes.Buffer
-	cmdr := DeisCmd{WOut: &b, ConfigFile: cf}
+	cmdr := HephyCmd{WOut: &b, ConfigFile: cf}
 
 	err = cmdr.ConfigUnset("foo", []string{"FOO"})
 	assert.NoErr(t, err)

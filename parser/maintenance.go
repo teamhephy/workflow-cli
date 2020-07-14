@@ -1,21 +1,22 @@
 package parser
 
 import (
-	"github.com/teamhephy/workflow-cli/cmd"
 	docopt "github.com/docopt/docopt-go"
+	"github.com/teamhephy/workflow-cli/cmd"
+	"github.com/teamhephy/workflow-cli/executable"
 )
 
-// Maintenance displays all relevant commands for `deis maintenance`.
+// Maintenance displays all relevant commands for `hephy maintenance`.
 func Maintenance(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Valid commands for maintenance:
 
 maintenance:info   view maintenance mode of an application
 maintenance:on     turn on maintenance for an app
 maintenance:off    turn off maintenance for an app
 
-Use 'deis help [command]' to learn more.
-`
+Use '{{.Name}} help [command]' to learn more.
+`)
 
 	switch argv[0] {
 	case "maintenance:info":
@@ -40,15 +41,15 @@ Use 'deis help [command]' to learn more.
 }
 
 func maintenanceInfo(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Prints info about the current application's maintenance state.
 
-Usage: deis maintenance:info [options]
+Usage: {{.Name}} maintenance:info [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name for the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -60,15 +61,15 @@ Options:
 }
 
 func maintenanceEnable(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Enables maintenance mode for an app.
 
-Usage: deis maintenance:on [options]
+Usage: {{.Name}} maintenance:on [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
@@ -80,15 +81,15 @@ Options:
 }
 
 func maintenanceDisable(argv []string, cmdr cmd.Commander) error {
-	usage := `
+	usage := executable.Render(`
 Disables maintenance mode for an app.
 
-Usage: deis maintenance:off [options]
+Usage: {{.Name}} maintenance:off [options]
 
 Options:
   -a --app=<app>
     the uniquely identifiable name of the application.
-`
+`)
 
 	args, err := docopt.Parse(usage, argv, true, "", false, true)
 
