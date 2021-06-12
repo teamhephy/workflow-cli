@@ -11,6 +11,7 @@ func Ps(argv []string, cmdr cmd.Commander) error {
 	usage := executable.Render(`
 Valid commands for processes:
 
+ps:console     get shell access to a running pod
 ps:list        list application processes
 ps:restart     restart an application or its process types
 ps:scale       scale processes (e.g. web=4 worker=2)
@@ -19,6 +20,8 @@ Use '{{.Name}} help [command]' to learn more.
 `)
 
 	switch argv[0] {
+	case "ps:console":
+		return psConsole(argv, cmdr)
 	case "ps:list":
 		return psList(argv, cmdr)
 	case "ps:restart":
