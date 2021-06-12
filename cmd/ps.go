@@ -11,6 +11,8 @@ import (
 	"github.com/teamhephy/controller-sdk-go"
 	"github.com/teamhephy/controller-sdk-go/api"
 	"github.com/teamhephy/controller-sdk-go/ps"
+	"github.com/teamhephy/workflow-cli/pkg/console"
+	"github.com/teamhephy/workflow-cli/settings"
 )
 
 // PsList lists an app's processes.
@@ -159,4 +161,19 @@ func parsePsTargets(targets []string) (map[string]int, error) {
 	}
 
 	return targetMap, nil
+}
+
+// Get a console on a running pod.
+func (d *HephyCmd) PsConsole(podName string, procType string, appID string, execCommand string, debug bool) error {
+	s, err := settings.Load(d.ConfigFile)
+	if err != nil {
+		return err
+	}
+	d.Printf("Starting console session with command %s for pod %s for application %s\n", execCommand, podName, appID)
+	consoleErr := console.Start(s.Client, appID, podName, procType, execCommand, debug)
+	if consoleErr != nil {
+		return consoleErr
+	}
+
+	return nil
 }

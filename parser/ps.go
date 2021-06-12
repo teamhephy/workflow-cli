@@ -114,3 +114,37 @@ Options:
 	apps := safeGetValue(args, "--app")
 	return cmdr.PsScale(apps, args["<type>=<num>"].([]string))
 }
+
+func psConsole(argv []string, cmdr cmd.Commander) error {
+	usage := executable.Render(`
+Get a console session to a running container within a pod
+Usage: {{.Name}} ps:console <podname> <type> <app> <command> [options]
+Arguments:
+  <podname>
+    the process name as defined in your Procfile, such as 'web' or 'worker'.
+	Note that Dockerfile apps have a default 'cmd' process type.
+  <type>
+    the process name as defined in your Procfile, such as 'web' or 'worker'.
+  <app>
+	the uniquely identifiable name for the application.
+  <command>
+	the command to use upon entring the pod e.g. '/bin/bash'
+Options:
+  --debug=true
+    show debug information
+`)
+
+	args, err := docopt.Parse(usage, argv, true, "", false, true)
+
+	if err != nil {
+		return err
+	}
+
+	podName := safeGetValue(args, "<podname>")
+	procType := safeGetValue(args, "<type>")
+	application := safeGetValue(args, "<app>")
+	execCommand := safeGetValue(args, "<command>")
+	debug := safeGetValue(args, "--debug") == "true"
+
+	return cmdr.PsConsole(podName, procType, application, execCommand, debug)
+}
