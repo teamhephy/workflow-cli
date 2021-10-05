@@ -4,16 +4,16 @@ import (
 	"bytes"
 	"crypto/tls"
 	"fmt"
+	"github.com/gorilla/websocket"
 	"io"
+	"io/ioutil"
+	"k8s.io/client-go/rest"
 	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
 	"strings"
 	"sync"
-	"io/ioutil"
-	"github.com/gorilla/websocket"
-	"k8s.io/client-go/rest"
 )
 
 // ExecOptions describe a execute request args.
@@ -108,13 +108,21 @@ func WebsocketCallback(c *websocket.Conn) error {
 
 	cc := make(chan os.Signal, 1)
 	signal.Notify(cc, os.Interrupt)
-	go func(){
+	go func() {
 		for _ = range cc {
 			// sig is a ^C, handle it
-			if err := c.WriteMessage(websocket.BinaryMessage, []byte{13, 10,13,10}); err != nil {
+			if err := c.WriteMessage(websocket.BinaryMessage, []byte{13, 10, 13, 10}); err != nil {
 				errChan <- err
 				return
 			}
+		}
+	}()
+
+	go func() {
+		select {
+		case <-timeOutContext.Done():
+			fmt.Printf("Connection timeout due to setting CONTAINER_CONSOLE_WEBSOCKET_TIMEOUT=%d seconds.", myKubeApiAccess.WebsocketTimeout)
+			c.Close()
 		}
 	}()
 
@@ -130,25 +138,26 @@ func (wrt *WebsocketRoundTripper) RoundTrip(r *http.Request) (*http.Response, er
 		TLSClientConfig: wrt.TLSConfig,
 		Subprotocols:    protocols,
 	}
-	log.Printf("[RoundTrip] Url: %s",r.URL.String())
+	log.Printf("[RoundTrip] Url: %s", r.URL.String())
 	tokenLength := len(myKubeApiAccess.Token)
 	if tokenLength > 11 {
-		log.Printf("[RoundTrip] Decoded token: %s ... %s",myKubeApiAccess.Token[0:10],myKubeApiAccess.Token[tokenLength-10:])
-	}else{
+		log.Printf("[RoundTrip] Decoded token: %s ... %s", myKubeApiAccess.Token[0:10], myKubeApiAccess.Token[tokenLength-10:])
+	} else {
 		log.Println(myKubeApiAccess.Token)
 	}
-	conn, resp, err := dialer.Dial(r.URL.String(), http.Header{"Authorization": []string{"Bearer "+myKubeApiAccess.Token} })
-	if resp.StatusCode != 200 &&  resp.StatusCode != 101 {
+
+	conn, resp, err := dialer.Dial(r.URL.String(), http.Header{"Authorization": []string{"Bearer " + myKubeApiAccess.Token}})
+	if resp.StatusCode != 200 && resp.StatusCode != 101 {
 		bodyBytes, resp_err := ioutil.ReadAll(resp.Body)
 		if resp_err != nil {
 			log.Fatal(resp_err)
 		}
 		bodyString := string(bodyBytes)
 		log.Printf("[RoundTrip] Error connecting to remote!\n")
-		log.Printf("[RoundTrip] HTTP Status: %d\n",resp.StatusCode)
-		log.Printf("[RoundTrip] HTTP Protocol: %s\n",resp.Proto)
-		log.Printf("[RoundTrip] HTTP headers: %#v\n",resp.Header)
-		log.Printf("[RoundTrip] HTTP body: %s\n",bodyString)
+		log.Printf("[RoundTrip] HTTP Status: %d\n", resp.StatusCode)
+		log.Printf("[RoundTrip] HTTP Protocol: %s\n", resp.Proto)
+		log.Printf("[RoundTrip] HTTP headers: %#v\n", resp.Header)
+		log.Printf("[RoundTrip] HTTP body: %s\n", bodyString)
 	}
 	if err != nil {
 		return nil, err

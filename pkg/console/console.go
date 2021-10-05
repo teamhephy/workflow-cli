@@ -1,15 +1,17 @@
 package console
 
 import (
-	"github.com/sirupsen/logrus"
-	"os"
-	"fmt"
-	"io/ioutil"
-	"encoding/json"
-	"k8s.io/client-go/tools/clientcmd"
-	"errors"
+	"context"
 	"encoding/base64"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/sirupsen/logrus"
 	deis "github.com/teamhephy/controller-sdk-go"
+	"io/ioutil"
+	"k8s.io/client-go/tools/clientcmd"
+	"os"
+	"time"
 )
 
 var log = logrus.New()
@@ -20,13 +22,16 @@ func init() {
 }
 
 type KubeApiAccess struct {
-	ApiEndpoint string
-	Token 		string
-	Error 		bool
-	Msg			string
+	ApiEndpoint      string
+	Token            string
+	WebsocketTimeout int
+	Error            bool
+	Msg              string
 }
 
 var myKubeApiAccess KubeApiAccess
+var timeOutContext context.Context
+var timeOutContextCancelation context.CancelFunc
 
 func getKubernetesApiAndToken(c *deis.Client, application string) error {
 	u := fmt.Sprintf("/v2/apps/%s/console-token", application)
@@ -43,8 +48,8 @@ func getKubernetesApiAndToken(c *deis.Client, application string) error {
 		return httpErr
 	}
 	// No hephy token provided == 401; Wrong hephy token provided == 403
-	if (httpResp.StatusCode == 401 || httpResp.StatusCode == 403) {
-		return errors.New("\nPermission denied. Please ensure that you have access to the application '"+application+"'")
+	if httpResp.StatusCode == 401 || httpResp.StatusCode == 403 {
+		return errors.New("\nPermission denied. Please ensure that you have access to the application '" + application + "'")
 	}
 	json.Unmarshal([]byte(body), &myKubeApiAccess)
 	if myKubeApiAccess.Error {
@@ -53,7 +58,6 @@ func getKubernetesApiAndToken(c *deis.Client, application string) error {
 
 	return nil
 }
- 
 
 func Start(c *deis.Client, applicationName string, podName string, procType string, execCommand string, debug bool) error {
 	if debug {
@@ -64,18 +68,16 @@ func Start(c *deis.Client, applicationName string, podName string, procType stri
 		return collectParametersError
 	}
 
-	containerName := applicationName+"-"+procType
+	containerName := applicationName + "-" + procType
 	opts := &ExecOptions{}
 	opts.Namespace = applicationName
 	opts.Pod = podName
 	opts.Container = containerName
-	opts.TTY = true 
+	opts.TTY = true
 	opts.Stdin = true
 	opts.Command = []string{execCommand}
 
-	//log.Printf("[Start] Controller Url: %s",deis.Client.ControllerURL)
-	//log.Printf("[Start] User token: %s...",deis.Client.Token[0:5])
-	log.Printf("[Start] Container name: %s",opts.Container)
+	log.Printf("[Start] Container name: %s", opts.Container)
 
 	sDec, err := base64.StdEncoding.DecodeString(myKubeApiAccess.Token)
 	if err != nil {
@@ -88,6 +90,9 @@ func Start(c *deis.Client, applicationName string, podName string, procType stri
 		log.Println(err)
 		return err
 	}
+
+	timeOutContext, timeOutContextCancelation = context.WithTimeout(context.TODO(), time.Duration(myKubeApiAccess.WebsocketTimeout)*time.Second)
+	defer timeOutContextCancelation()
 
 	wrt, err := ExecRoundTripper(config, WebsocketCallback)
 	if err != nil {
