@@ -16,8 +16,7 @@ REGISTRY ?=
 IMAGE_PREFIX ?= hephy
 IMAGE := ${REGISTRY}${IMAGE_PREFIX}/workflow-cli-dev:${REVISION}
 
-BUILD_OS ?=linux darwin windows
-BUILD_ARCH ?=amd64 386 arm64
+BUILD_LIST ?=-os=darwin -os=linux -os=windows -arch=amd64 -arch=arm64 -osarch=linux/386 -osarch=windows/386
 
 DIST_DIR ?= _dist
 
@@ -39,22 +38,22 @@ build: build-test-image
 # This is supposed to be run within a docker container
 build-latest:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}-${REVISION}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/deis-latest-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} ${BUILD_LIST} -output="${DIST_DIR}/deis-latest-{{.OS}}-{{.Arch}}" .
 
 # This is supposed to be run within a docker container
 build-revision:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}-${REVISION}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/${REVISION}/deis-${REVISION}-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} ${BUILD_LIST} -output="${DIST_DIR}/${REVISION}/deis-${REVISION}-{{.OS}}-{{.Arch}}" .
 
 # This is supposed to be run within a docker container
 build-stable:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/deis-stable-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} ${BUILD_LIST} -output="${DIST_DIR}/deis-stable-{{.OS}}-{{.Arch}}" .
 
 # This is supposed to be run within a docker container
 build-tag:
 	$(eval GO_LDFLAGS = -ldflags '-X ${repo_path}/version.Version=${GIT_TAG}')
-	gox -verbose ${GO_LDFLAGS} -os="${BUILD_OS}" -arch="${BUILD_ARCH}" -output="${DIST_DIR}/${GIT_TAG}/deis-${GIT_TAG}-{{.OS}}-{{.Arch}}" .
+	gox -verbose ${GO_LDFLAGS} ${BUILD_LIST} -output="${DIST_DIR}/${GIT_TAG}/deis-${GIT_TAG}-{{.OS}}-{{.Arch}}" .
 
 build-all: build-latest build-revision
 
