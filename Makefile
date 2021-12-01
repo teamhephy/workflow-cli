@@ -17,7 +17,7 @@ IMAGE_PREFIX ?= hephy
 IMAGE := ${REGISTRY}${IMAGE_PREFIX}/workflow-cli-dev:${REVISION}
 
 BUILD_OS ?=linux darwin windows
-BUILD_ARCH ?=amd64 386
+BUILD_ARCH ?=amd64 386 arm64
 
 DIST_DIR ?= _dist
 
