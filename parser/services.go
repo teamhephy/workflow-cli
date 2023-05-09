@@ -49,7 +49,7 @@ Usage: {{.Name}} services:add --type <procfile_type> --route <path_pattern> [opt
 Arguments:
   <procfile_type>
     Procfile type which should handle the request, e.g. webhooks (should be bind to the port PORT).
-    Only single extra service per Porcfile type could be created
+    Only single extra service per Procfile type could be created
 
   <path_pattern>
     Nginx locations where route requests, one or many via comma,
